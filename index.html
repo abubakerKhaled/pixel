@@ -21,8 +21,8 @@
     </div>
 
     <main class="grid place-items-center h-full isolate max-w-[1000px] mx-auto">
-      <div class="flex gap-16 justify-between items-center w-full">
-        <!-- Left panel -->
+      <div class="flex flex-col md:flex-row gap-16 justify-between items-center w-full">
+        <!-- Logo + Word Stack -->
         <div>
           <div class="flex gap-3 items-baseline">
             <svg
@@ -68,7 +68,7 @@
                 d="M181.499 50.416h-10.083V60.5h10.083V50.416Z"
               ></path>
             </svg>
-            <div class="uppercase text-4xl text-pixl relative">
+            <div aria-hidden="true" class="hidden md:block uppercase text-4xl text-pixl relative">
               <div
                 class="absolute opacity-20 flex flex-col gap-2 my-2 bottom-full"
               >
@@ -115,7 +115,7 @@
           </div>
         </div>
 
-        <!-- Right panel -->
+        <!-- Action Buttons -->
         <div class="w-80 max-w-full pb-16">
           <div class="text-pixl text-3xl">A place for the cool squares.</div>
           <div class="flex flex-col gap-3 mt-16 w-68 text-center">
@@ -148,7 +148,7 @@
 
     <!-- Footer -->
     <footer class="fixed bottom-0 inset-x-0 pb-3 z-30">
-      <div class="flex flex-col gab-1.5 items-center text-pixl p-4">
+      <div class="flex flex-col gab-1.5 items-center text-center text-pixl p-4">
         <p>All Rights Reserved. Pixl Media For Everyone*</p>
         <p class="obasity-50 text-xs">
           *except for badgers, they’re $&@*holes.
