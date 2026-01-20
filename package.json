@@ -12,6 +12,8 @@
   "license": "ISC",
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.18",
+    "prettier": "^3.8.0",
+    "prettier-plugin-tailwindcss": "^0.7.2",
     "tailwindcss": "^4.1.18",
     "vite": "^7.3.1"
   }
