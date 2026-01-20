@@ -1,12 +1,41 @@
 <!-- index.html -->
 <!doctype html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="color-scheme" content="dark" />
+    <meta
+      name="description"
+      content="Pixel - The premier platform for creative professionals. Join the community of coders, artists, writers, and designers."
+    />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://pixel.media/" />
+    <meta property="og:title" content="Pixel | A place for the cool squares." />
+    <meta
+      property="og:description"
+      content="The premier platform for creative professionals. Join the community of coders, artists, writers, and designers."
+    />
+    <meta property="og:image" content="/images/og-image.png" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://pixel.media/" />
+    <meta
+      property="twitter:title"
+      content="Pixel | A place for the cool squares."
+    />
+    <meta
+      property="twitter:description"
+      content="The premier platform for creative professionals. Join the community of coders, artists, writers, and designers."
+    />
+    <meta property="twitter:image" content="/images/og-image.png" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="stylesheet" href="/styles.css" />
-    <title>Pixel</title>
+    <title>Pixel | A place for the cool squares.</title>
   </head>
   <body
     class="text-pixl-light bg-pixl-dark relative h-dvh w-full md:overflow-clip flex flex-col md:block"
@@ -15,7 +44,8 @@
     <div class="fixed inset-0 overflow-clip">
       <img
         src="/images/Official-Login-BG.png"
-        alt="Background"
+        alt=""
+        role="presentation"
         class="absolute inset-y-0 left-[15%] w-full h-full object-cover mask-l-from-80% opacity-30"
       />
     </div>
@@ -131,27 +161,31 @@
             class="flex flex-col gap-3 mt-8 sm:mt-12 md:mt-16 md:w-68 text-center"
           >
             <a
-              class="bg-pixl-dark/50 hover:bg-pixl-dark/60 active:bg-pixl-dark/75 border border-pixl/50 hover:border-pixl/60 active:border-pixl/75 px-4 py-1.5 text-pixl"
+              class="bg-pixl-dark/50 hover:bg-pixl-dark/60 active:bg-pixl-dark/75 border border-pixl/50 hover:border-pixl/60 active:border-pixl/75 px-4 py-1.5 text-pixl transition-all duration-200"
               href="#"
+              role="button"
               >Sign in with Google</a
             >
             <a
-              class="bg-pixl-dark/50 hover:bg-pixl-dark/60 active:bg-pixl-dark/75 border border-pixl/50 hover:border-pixl/60 active:border-pixl/75 px-4 py-1.5 text-pixl"
+              class="bg-pixl-dark/50 hover:bg-pixl-dark/60 active:bg-pixl-dark/75 border border-pixl/50 hover:border-pixl/60 active:border-pixl/75 px-4 py-1.5 text-pixl transition-all duration-200"
               href="#"
+              role="button"
               >Sign in with Apple</a
             >
             <p>or</p>
             <a
-              class="bg-pixl hover:bg-pixl/90 active:bg-pixl/95 border border-transparent px-4 py-1.5 text-pixl-dark"
+              class="bg-pixl hover:bg-pixl/90 active:bg-pixl/95 border border-transparent px-4 py-1.5 text-pixl-dark transition-all duration-200"
               href="#"
+              role="button"
               >Create an Account</a
             >
             <p class="text-sm mt-12 sm:mt-16 md:mt-20 text-left">
               Already have an account?
             </p>
             <a
-              class="bg-pixl hover:bg-pixl/90 active:bg-pixl/95 border border-transparent px-4 py-1.5 text-pixl-dark"
+              class="bg-pixl hover:bg-pixl/90 active:bg-pixl/95 border border-transparent px-4 py-1.5 text-pixl-dark transition-all duration-200"
               href="#"
+              role="button"
               >Sign in</a
             >
           </div>
@@ -163,7 +197,7 @@
     <footer class="relative md:fixed md:bottom-0 md:inset-x-0 pb-3 z-30">
       <div class="flex flex-col gab-1.5 items-center text-center text-pixl p-4">
         <p>All Rights Reserved. Pixl Media For Everyone*</p>
-        <p class="obasity-50 text-xs">
+        <p class="opacity-50 text-xs">
           *except for badgers, they’re $&@*holes.
         </p>
 
