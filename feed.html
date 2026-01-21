@@ -38,15 +38,15 @@
     <title>Pixel | A place for the cool squares.</title>
   </head>
   <body
-    class="bg-pixl-dark text-pixl-light flex h-dvh gap-16 overflow-clip px-4"
+    class="flex h-dvh gap-16 overflow-clip bg-pixl-dark px-4 text-pixl-light"
   >
     <!-- nav -->
-    <header class="bg-pixl-light/50 my-4 w-40 shrink-0">
+    <header class="my-4 w-40 shrink-0 bg-pixl-light/50">
       <p>Navigation</p>
     </header>
 
     <!-- main -->
-    <main class="flex flex-col gap-4 overflow-y-auto py-4">
+    <main class="flex grow flex-col gap-4 overflow-y-auto py-4">
       <p>
         Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quod
         asperiores, ipsam officiis tempore iure provident suscipit, nihil
@@ -236,8 +236,117 @@
     </main>
 
     <!-- sidebar -->
-    <aside class="bg-pixl/50 my-4 w-72 shrink-0">
-      <p>Sidebar</p>
+    <aside class="my-4 w-80 shrink-0 overflow-y-auto px-0.5">
+      <input
+        type="text"
+        placeholder="#Search an idea or pixel"
+        class="w-full text-sm"
+      />
+      <hr class="mt-2 border-pixl-light/10" />
+
+      <!-- Atrists to follow -->
+      <div class="mt-10 border-pixl-light/10 p-4">
+        <h2 class="text-sm text-pixl-light/60">Artists to follow</h2>
+        <ol class="mt-4 flex flex-col gap-4">
+          <li class="flex items-center justify-between gap-4">
+            <div class="flex items-center gap-2.5">
+              <img
+                src="/images/alessia.png"
+                alt="Avatar of Alessia"
+                class="size-8 object-cover"
+              />
+              <p class="truncate text-sm">alessia_draws</p>
+            </div>
+            <button
+              class="border border-pixl/50 bg-pixl-dark/50 px-2 py-1 text-sm text-pixl hover:border-pixl/60 hover:bg-pixl-dark/60 active:border-pixl/75 active:bg-pixl-dark/75"
+            >
+              Follow
+            </button>
+          </li>
+          <li class="flex items-center justify-between gap-4">
+            <div class="flex items-center gap-2.5">
+              <img
+                src="/images/anne.png"
+                alt="Avatar of Anne"
+                class="size-8 object-cover"
+              />
+              <p class="truncate text-sm">just_anne</p>
+            </div>
+            <button
+              class="border border-pixl/50 bg-pixl-dark/50 px-2 py-1 text-sm text-pixl hover:border-pixl/60 hover:bg-pixl-dark/60 active:border-pixl/75 active:bg-pixl-dark/75"
+            >
+              Follow
+            </button>
+          </li>
+          <li class="flex items-center justify-between gap-4">
+            <div class="flex items-center gap-2.5">
+              <img
+                src="/images/mr-anderson.png"
+                alt="Avatar of Mr. Anderson"
+                class="size-8 object-cover"
+              />
+              <p class="truncate text-sm">Mr. Anderson</p>
+            </div>
+            <button
+              class="border border-pixl/50 bg-pixl-dark/50 px-2 py-1 text-sm text-pixl hover:border-pixl/60 hover:bg-pixl-dark/60 active:border-pixl/75 active:bg-pixl-dark/75"
+            >
+              Follow
+            </button>
+          </li>
+          <li class="flex items-center justify-between gap-4">
+            <div class="flex items-center gap-2.5">
+              <img
+                src="/images/michael.png"
+                alt="Avatar of Michael"
+                class="size-8 object-cover"
+              />
+              <p class="truncate text-sm">Michael</p>
+            </div>
+            <button
+              class="border border-pixl/50 bg-pixl-dark/50 px-2 py-1 text-sm text-pixl hover:border-pixl/60 hover:bg-pixl-dark/60 active:border-pixl/75 active:bg-pixl-dark/75"
+            >
+              Follow
+            </button>
+          </li>
+        </ol>
+        <a href="#" class="mt-4 inline-block text-sm text-pixl-light/60"
+          >Show more</a
+        >
+      </div>
+
+      <!-- Follow idea streams -->
+      <div class="mt-4 border-pixl-light/10 p-4">
+        <h2 class="text-sm text-pixl-light/60">Follow idea streams</h2>
+        <ol class="mt-4 flex flex-col gap-2.5">
+          <li class="flex items-center justify-between gap-4">
+            <p class="truncate text-sm">Breakfast ideas and whatever</p>
+            <button
+              class="grid size-7 shrink-0 place-items-center border border-pixl/50 bg-pixl-dark/50 text-2xl leading-none text-pixl hover:border-pixl/60 hover:bg-pixl-dark/60 active:border-pixl/75 active:bg-pixl-dark/75"
+            >
+              +
+            </button>
+          </li>
+          <li class="flex items-center justify-between gap-4">
+            <p class="truncate text-sm">Quick book to read</p>
+            <button
+              class="grid size-7 shrink-0 place-items-center border border-pixl/50 bg-pixl-dark/50 text-2xl leading-none text-pixl hover:border-pixl/60 hover:bg-pixl-dark/60 active:border-pixl/75 active:bg-pixl-dark/75"
+            >
+              +
+            </button>
+          </li>
+          <li class="flex items-center justify-between gap-4">
+            <p class="truncate text-sm">Inspiration for Art</p>
+            <button
+              class="grid size-7 shrink-0 place-items-center border border-pixl/50 bg-pixl-dark/50 text-2xl leading-none text-pixl hover:border-pixl/60 hover:bg-pixl-dark/60 active:border-pixl/75 active:bg-pixl-dark/75"
+            >
+              +
+            </button>
+          </li>
+        </ol>
+        <a href="#" class="mt-4 inline-block text-sm text-pixl-light/60"
+          >Show more</a
+        >
+      </div>
     </aside>
   </body>
 </html>
