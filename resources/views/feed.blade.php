@@ -594,7 +594,4 @@
     </main>
 
     @include('partials.aside')
-</body>
-
-</html>
 </x-layout>
