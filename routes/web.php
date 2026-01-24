@@ -22,14 +22,32 @@ Route::get('/feed', function () {
                 <img src="/images/simon-chilling.png" alt="" />
             str,
             'likeCount' => 23,
-            'replyCount' => 22,
+            'replayCount' => 22,
             'repostCount' => 132
         ],
     ];
 
-    $feedItems = json_decode(json_encode($feedItems));
+    $replies = [
+        [
+            'profile' => [
+                'displayName' => 'Simon',
+                'handle' => 'simonswiss',
+                'avatar' => '/images/simon-chilling.png',
+            ],
+            'postedAgo' => '3', // we will compute it from the date it was published at
+            'content' => <<<'str'
+                <p>Heh — this looks just like me!</p>
+            str,
+            'likeCount' => 54,
+            'replayCount' => 97,
+            'repostCount' => 45
+        ],
+    ];
 
-    return view('feed', compact('feedItems'));
+    $feedItems = json_decode(json_encode($feedItems));
+    $replies = json_decode(json_encode($replies));
+
+    return view('feed', compact(['feedItems', 'replies']));
 });
 
 Route::get('/profile', function () {
@@ -48,12 +66,30 @@ Route::get('/profile', function () {
                 <img src="/images/simon-chilling.png" alt="" />
             str,
             'likeCount' => 23,
-            'replyCount' => 22,
+            'replayCount' => 22,
             'repostCount' => 132
         ],
     ];
 
+    $replies = [
+        [
+            'profile' => [
+                'displayName' => 'Simon',
+                'handle' => 'simonswiss',
+                'avatar' => '/images/simon-chilling.png',
+            ],
+            'postedAgo' => '3', // we will compute it from the date it was published at
+            'content' => <<<'str'
+                <p>Heh — this looks just like me!</p>
+            str,
+            'likeCount' => 54,
+            'replayCount' => 97,
+            'repostCount' => 45
+        ],
+    ];
+
     $feedItems = json_decode(json_encode($feedItems));
-    
-    return view('profile', compact('feedItems'));
+    $replies = json_decode(json_encode($replies));
+
+    return view('profile', compact(['feedItems', 'replies']));
 });
