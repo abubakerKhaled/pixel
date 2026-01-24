@@ -19,7 +19,7 @@ class Profile extends Model
         'avatar_url',
     ];
 
-    public function profile(): BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
