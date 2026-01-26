@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -16,7 +15,7 @@ class Post extends Model
         'profile_id',
         'parent_id',
         'repost_of_id',
-        'content'
+        'content',
     ];
 
     public function profile(): BelongsTo
@@ -52,30 +51,38 @@ class Post extends Model
     public static function publish(Profile $profile, string $content): self
     {
         return static::create([
-            'profile_id' => $profile->id,
-            'content' => $content,
-            'parent_id' => null,
-            'repost_of_id' => null
+            'profile_id'   => $profile->id,
+            'content'      => $content,
+            'parent_id'    => null,
+            'repost_of_id' => null,
         ]);
     }
 
     public static function reply(Profile $profile, Post $original, string $content): self
     {
         return static::create([
-            'profile_id' => $profile->id,
-            'content' => $content,
-            'parent_id' => $original->id,
-            'repost_of_id' => null
+            'profile_id'   => $profile->id,
+            'content'      => $content,
+            'parent_id'    => $original->id,
+            'repost_of_id' => null,
         ]);
     }
 
-    public static function repost(Profile $profile, Post $original, string $content=null): self
+    public static function repost(Profile $profile, Post $original, string $content = null): self
     {
-        return static::create([
-            'profile_id' => $profile->id,
-            'content' => $content,
-            'parent_id' => null,
-            'repost_of_id' => $original->id
+        return static::firstOrCreate([
+            'profile_id'   => $profile->id,
+            'content'      => $content,
+            'parent_id'    => null,
+            'repost_of_id' => $original->id,
         ]);
+    }
+
+    public static function removeRepost(Profile $profile, Post $originalPost): bool
+    {
+        return static::where([
+            'profile_id'   => $profile->id,
+            'repost_of_id' => $originalPost->id,
+        ])->delete() > 0;
     }
 }

@@ -76,3 +76,28 @@ test('create plain quote', function(){
     expect($orginal->reposts)->toHaveCount(1);
     expect($quote->content === $quote);
 });
+
+
+// duplicate reposts
+test('prevents duplicate reposts', function() {
+    $original = Post::factory()->create();
+    $profile = Profile::factory()->create();
+
+    $r1 = Post::repost($profile, $original);
+    $r2 = Post::repost($profile, $original);
+
+    expect($r1->id)->toBe($r2->id);
+});
+
+// remove a repost
+test('remove repost', function() {
+    $original = Post::factory()->create();
+    $repost = Post::factory()->repost($original)->create();
+
+    $profile = $repost->profile;
+
+    $success = Post::($profile, $original);
+
+    expect($original->reposts)->toHaveCount(0);
+    expect($success)->toBeTrue();
+});
