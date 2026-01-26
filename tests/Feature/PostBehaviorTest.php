@@ -7,7 +7,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-
+// publish testing
 test('it allows a profile to publish a post', function(){
     $profile = Profile::factory()->create();
 
@@ -19,6 +19,7 @@ test('it allows a profile to publish a post', function(){
     expect($post->repost_of_id)->toBeNull();
 });
 
+// reply testing
 test('can reply to post', function(){
     $orginal = Post::factory()->create();
 
@@ -38,4 +39,40 @@ test('can have many replies', function(){
     expect($replies->first()->parent->is($orginal))->toBeTrue();
     expect($orginal->replies)->toHaveCount(4);
     expect($orginal->replies->contains($replies->first()))->toBeTrue();
+});
+
+// repostt testing
+test('create plain repost', function(){
+    $orginal = Post::factory()->create();
+
+    $reposter = Profile::factory()->create();
+    $repost = Post::repost($reposter, $orginal);
+
+    expect($repost->repostOf->is($orginal))->toBeTrue();
+    expect($orginal->reposts)->toHaveCount(1);
+    expect($repost->content)->toBeNull();
+});
+
+
+test('can have many reposts', function(){
+    $orginal = Post::factory()->create();
+
+    $reposts = Post::factory()->count(4)->repost($orginal)->create();
+
+    expect($reposts->first()->repostOf->is($orginal))->toBeTrue();
+    expect($orginal->reposts)->toHaveCount(4);
+    expect($orginal->reposts->contains($reposts->first()))->toBeTrue();
+});
+
+// quote testing
+test('create plain quote', function(){
+    $quote = 'this is a quote';
+    $orginal = Post::factory()->create();
+
+    $reposter = Profile::factory()->create();
+    $quote = Post::repost($reposter, $orginal, $quote);
+
+    expect($quote->repostOf->is($orginal))->toBeTrue();
+    expect($orginal->reposts)->toHaveCount(1);
+    expect($quote->content === $quote);
 });
