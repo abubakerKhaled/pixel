@@ -96,7 +96,7 @@ test('remove repost', function() {
 
     $profile = $repost->profile;
 
-    $success = Post::($profile, $original);
+    $success = Post::removeRepost($profile, $original);
 
     expect($original->reposts)->toHaveCount(0);
     expect($success)->toBeTrue();
