@@ -19,6 +19,7 @@ class Profile extends Model
         'handle',
         'bio',
         'avatar_url',
+        'cover_url',
     ];
 
     public function user(): BelongsTo

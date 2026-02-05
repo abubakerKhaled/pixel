@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('display_name');
             $table->string('handle')->unique();
             $table->string('avatar_url');
+            $table->string('cover_url');
             $table->text('bio')->nullable();
             $table->timestamps();
         });
