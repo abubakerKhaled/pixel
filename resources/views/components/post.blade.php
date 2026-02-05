@@ -30,12 +30,13 @@
                 <path fill="currentColor"
                     d="M15.714 5.286h-1.428v1.429h1.428V5.286Zm-1.428 0h-1.428v1.429h1.428V5.286Zm-1.43 0h-1.428v1.429h1.428V5.286Z" />
             </svg>
-            <span><a href="/{{ $post->profile->handle }}" class="hover:underline">{{ $post->profile->display_name }}</a>
+            <span><a href="{{ route('profiles.show', $post->profile) }}"
+                    class="hover:underline">{{ $post->profile->display_name }}</a>
                 reposted</span>
         </div>
     @endif
     <div class="flex items-start gap-4">
-        <a href="/{{ $displayPost->profile->handle }}" class="shrink-0">
+        <a href="{{ route('profiles.show', $displayPost->profile) }}" class="shrink-0">
             <img src="{{ $displayPost->profile->avatar_url }}"
                 alt="Avatar for {{ $displayPost->profile->display_name }}" class="size-10 object-cover" />
         </a>
@@ -45,12 +46,12 @@
                 <div class="flex items-center justify-between gap-4">
                     <div class="flex items-center gap-2.5">
                         <p><a class="hover:underline"
-                                href="/{{ $displayPost->profile->handle }}">{{ $displayPost->profile->display_name }}</a>
+                                href="{{ route('profiles.show', $displayPost->profile) }}">{{ $displayPost->profile->display_name }}</a>
                         </p>
                         <p class="text-pixl-light/40 text-xs">{{ $displayPost->created_at->diffForHumans() }}</p>
                         <p>
                             <a class="text-pixl-light/40 hover:text-pixl-light/60 text-xs"
-                                href="/{{ $displayPost->profile->handle }}">{{ '@' . $displayPost->profile->handle }}</a>
+                                href="{{ route('profiles.show', $displayPost->profile) }}">{{ '@' . $displayPost->profile->handle }}</a>
                         </p>
                     </div>
                     <button class="group flex gap-[3px] py-2" aria-label="Post options">
@@ -216,7 +217,7 @@
                     </div>
                 @endif
                 <!-- Replies -->
-                @if ($showReplies && $displayPost->replies->isNotEmpty())
+                @if ($showReplies && $displayPost->relationLoaded('replies') && $displayPost->replies->isNotEmpty())
                     <ol class="mt-4">
                         @foreach ($displayPost->replies as $reply)
                             <x-reply :post="$reply" />
