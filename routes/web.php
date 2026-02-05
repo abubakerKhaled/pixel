@@ -52,3 +52,4 @@ Route::get('/feed', function () {
 });
 
 Route::get('/{profile:handle}', [ProfileController::class, 'show'])->name('profiles.show');
+Route::get('/{profile:handle}/with-replies', [ProfileController::class, 'replies'])->name('profiles.replies');

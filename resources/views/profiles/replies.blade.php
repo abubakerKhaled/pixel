@@ -68,7 +68,7 @@
         <!-- Feed -->
         <ol class="border-pixl-light/10 border-t pt-4">
             @foreach ($posts as $post)
-                <x-post :post="$post" />
+                <x-post :post="$post" :show-replies="true" />
             @endforeach
         </ol>
 

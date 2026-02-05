@@ -18,13 +18,15 @@ class ProfileFactory extends Factory
     public function definition(): array
     {
         $handle = $this->faker->unique()->userName();
+        $bgColor = $this->faker->hexColor();
+        $textColor = $this->faker->hexColor();
 
         return [
             'user_id' => User::factory(),
             'display_name' => $this->faker->name(),
             'handle' => $handle,
             'bio' => $this->faker->sentence(3, true),
-            'avatar_url' => 'https://dummyimage.com/640x480/ccc/000',
+            'avatar_url' => 'https://dummyimage.com/640x480/'.ltrim($bgColor, '#').'/'.ltrim($textColor, '#'),
             'cover_url' => "https://dummyimage.com/1400x640/333/f76a00?text={$handle}",
         ];
     }
