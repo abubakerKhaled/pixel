@@ -48,7 +48,8 @@
                         <p><a class="hover:underline"
                                 href="{{ route('profiles.show', $displayPost->profile) }}">{{ $displayPost->profile->display_name }}</a>
                         </p>
-                        <p class="text-pixl-light/40 text-xs">{{ $displayPost->created_at->diffForHumans() }}</p>
+                        <a href="{{ route('posts.show', [$displayPost->profile, $displayPost]) }}"
+                            class="text-pixl-light/40 hover:text-pixl-light/60 text-xs">{{ $displayPost->created_at->diffForHumans() }}</a>
                         <p>
                             <a class="text-pixl-light/40 hover:text-pixl-light/60 text-xs"
                                 href="{{ route('profiles.show', $displayPost->profile) }}">{{ '@' . $displayPost->profile->handle }}</a>
@@ -220,7 +221,7 @@
                 @if ($showReplies && $displayPost->relationLoaded('replies') && $displayPost->replies->isNotEmpty())
                     <ol class="mt-4">
                         @foreach ($displayPost->replies as $reply)
-                            <x-reply :post="$reply" />
+                            <x-reply :post="$reply" :showEngagement="$showEngagement ?? true" :showReplies="$showReplies ?? false" />
                         @endforeach
                     </ol>
                 @endif

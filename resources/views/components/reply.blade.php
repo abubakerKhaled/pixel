@@ -13,7 +13,8 @@
                     <a class="hover:underline"
                         href="{{ route('profiles.show', $post->profile) }}">{{ $post->profile->display_name }}</a>
                 </p>
-                <p class="text-pixl-light/40 text-xs">{{ $post->created_at->diffForHumans() }}</p>
+                <a href="{{ route('posts.show', [$post->profile, $post]) }}"
+                    class="text-pixl-light/40 hover:text-pixl-light/60 text-xs">{{ $post->created_at->diffForHumans() }}</a>
                 <p>
                     <a class="text-pixl-light/40 hover:text-pixl-light/60 text-xs"
                         href="{{ route('profiles.show', $post->profile) }}">{{ '@' . $post->profile->handle }}</a>
@@ -166,6 +167,14 @@
                     </div>
                 </div>
             </div>
+        @endif
+        {{-- Nested Replies --}}
+        @if ($showReplies && $post->relationLoaded('replies') && $post->replies->isNotEmpty())
+            <ol class="mt-4">
+                @foreach ($post->replies as $nestedReply)
+                    <x-reply :post="$nestedReply" :showEngagement="$showEngagement ?? true" :showReplies="$showReplies ?? false" />
+                @endforeach
+            </ol>
         @endif
     </div>
 </li>

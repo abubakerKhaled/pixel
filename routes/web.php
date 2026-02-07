@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -53,3 +54,6 @@ Route::get('/feed', function () {
 
 Route::get('/{profile:handle}', [ProfileController::class, 'show'])->name('profiles.show');
 Route::get('/{profile:handle}/replies', [ProfileController::class, 'replies'])->name('profiles.replies');
+Route::scopeBindings()->group(function () {
+    Route::get('/{profile:handle}/post/{post}', [PostController::class, 'show'])->name('posts.show');
+});
