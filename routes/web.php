@@ -10,21 +10,25 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dev/login', function() {
+Route::get('/dev/login', function () {
     $user = User::inRandomOrder()->first();
-    
+
     Auth::login($user);
     request()->session()->regenerate();
 
     return redirect()->intended(route('profiles.show', $user->profile));
-});
+})->name('login');
 
-Route::get('/dev/logout', function() {
+Route::get('/dev/logout', function () {
     Auth::logout();
     request()->session()->invalidate();
     request()->session()->regenerateToken();
 
     return redirect()->intended('/feed');
+})->name('logout');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/home', [PostController::class, 'index'])->name('posts.index');
 });
 
 Route::get('/feed', function () {

@@ -77,7 +77,7 @@
                         <div class="flex items-center gap-8">
                             <!-- Like -->
                             <div class="flex items-center gap-1">
-                                <button aria-label="Like" class="hover:text-pixl">
+                                <button aria-label="Like" @class(['hover:text-pixl', 'text-pixl' => $displayPost->has_liked])>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="h-[17px]"
                                         viewBox="0 0 20 17">
                                         <g fill="currentColor" clip-path="url(#a)">
@@ -96,7 +96,7 @@
                                         </defs>
                                     </svg>
                                 </button>
-                                <span class="text-sm">{{ $displayPost->likes_count }}</span>
+                                <span @class(['text-sm', 'text-pixl' => $displayPost->has_liked])>{{ $displayPost->likes_count }}</span>
                             </div>
                             <!-- Comment -->
                             <div class="flex items-center gap-1">
@@ -125,7 +125,7 @@
                             </div>
                             <!-- Re-post -->
                             <div class="flex items-center gap-1">
-                                <button aria-label="Re-post" class="hover:text-pixl">
+                                <button aria-label="Re-post" @class(['hover:text-pixl', 'text-pixl' => $displayPost->has_reposted])>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="h-[17px]"
                                         viewBox="0 0 20 17">
                                         <path fill="currentColor" d="M1.429 3.857H0v1.429h1.429V3.857Z" />
@@ -155,7 +155,7 @@
                                             d="M15.714 5.286h-1.428v1.429h1.428V5.286Zm-1.428 0h-1.428v1.429h1.428V5.286Zm-1.43 0h-1.428v1.429h1.428V5.286Z" />
                                     </svg>
                                 </button>
-                                <span class="text-sm">{{ $displayPost->reposts_count }}</span>
+                                <span @class(['text-sm', 'text-pixl' => $displayPost->has_reposted])>{{ $displayPost->reposts_count }}</span>
                             </div>
                         </div>
                         <div class="flex items-center gap-3">
