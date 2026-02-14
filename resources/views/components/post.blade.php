@@ -217,6 +217,10 @@
                         </div>
                     </div>
                 @endif
+                
+                <!-- Reply Form -->
+                <x-reply-form :post="$displayPost" />
+
                 <!-- Replies -->
                 @if ($showReplies && $displayPost->relationLoaded('replies') && $displayPost->replies->isNotEmpty())
                     <ol class="mt-4">

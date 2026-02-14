@@ -11,8 +11,7 @@
                     <p><a class="hover:underline" href="/profile">{{ $feedItem->profile->displayName }}</a></p>
                     <p class="text-pixl-light/40 text-xs">{{ $feedItem->postedAgo }}h</p>
                     <p>
-                        <a class="text-pixl-light/40 hover:text-pixl-light/60 text-xs"
-                            href="/profile">@{{ $feedItem - > profile - > handle }}</a>
+                        <a class="text-pixl-light/40 hover:text-pixl-light/60 text-xs" href="/profile">@{{ $feedItem->profile->handle }}</a>
                     </p>
                 </div>
                 <button class="group flex gap-[3px] py-2" aria-label="Post options">
