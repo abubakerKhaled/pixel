@@ -33,7 +33,18 @@ Route::middleware('auth')->group(function () {
     Route::scopeBindings()->group(function () {
         Route::post('/{profile:handle}/post/{post}/reply', 
             [PostController::class, 'reply'])->name('posts.reply');
+
+        Route::post('/{profile:handle}/post/{post}/repost', 
+            [PostController::class, 'repost'])->name('posts.repost');
+
+        Route::post('/{profile:handle}/post/{post}/quote', 
+            [PostController::class, 'quote'])->name('posts.quote');
+
+        Route::post('/{profile:handle}/post/{post}/like', 
+            [PostController::class, 'like'])->name('posts.like');
     });
+
+    Route::post('/{profile:handle}/follow', [ProfileController::class, 'follow'])->name('profiles.follow');
 });
 
 Route::get('/feed', function () {

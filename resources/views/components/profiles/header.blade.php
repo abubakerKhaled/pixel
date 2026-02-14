@@ -12,10 +12,25 @@
                 <p class="text-pixl-light/60 text-sm">{{ '@' . $profile->handle }}</p>
             </div>
         </div>
-        <a href="#"
-            class="bg-pixl-dark/50 hover:bg-pixl-dark/60 active:bg-pixl-dark/75 border-pixl/50 hover:border-pixl/60 active:border-pixl/75 text-pixl border px-2 py-1 text-sm">
-            Edit Profile
-        </a>
+        @if (Auth::id() === $profile->user_id)
+            <a href="#"
+                class="bg-pixl-dark/50 hover:bg-pixl-dark/60 active:bg-pixl-dark/75 border-pixl/50 hover:border-pixl/60 active:border-pixl/75 text-pixl border px-2 py-1 text-sm">
+                Edit Profile
+            </a>
+        @else
+            <!-- Follow Button -->
+            <div x-data="{
+                    following: {{ Auth::user()->profile->isFollowing($profile) ? 'true' : 'false' }},
+                    toggle() {
+                        this.following = !this.following;
+                        axios.post('{{ route('profiles.follow', $profile) }}');
+                    }
+                }">
+                <button type="button" x-on:click="toggle()" x-text="following ? 'Unfollow' : 'Follow'"
+                    class="bg-pixl-dark/50 hover:bg-pixl-dark/60 active:bg-pixl-dark/75 border-pixl/50 hover:border-pixl/60 active:border-pixl/75 text-pixl border px-2 py-1 text-sm">
+                </button>
+            </div>
+        @endif
     </div>
     <div class="[&_a]:text-pixl mt-8 [&_a]:hover:underline">
         <p>{{ $profile->bio }}</p>
