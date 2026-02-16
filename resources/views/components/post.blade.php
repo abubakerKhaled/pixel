@@ -55,11 +55,33 @@
                                 href="{{ route('profiles.show', $displayPost->profile) }}">{{ '@' . $displayPost->profile->handle }}</a>
                         </p>
                     </div>
-                    <button class="group flex gap-[3px] py-2" aria-label="Post options">
-                        <span class="bg-pixl-light/40 group-hover:bg-pixl-light/60 size-1"></span>
-                        <span class="bg-pixl-light/40 group-hover:bg-pixl-light/60 size-1"></span>
-                        <span class="bg-pixl-light/40 group-hover:bg-pixl-light/60 size-1"></span>
-                    </button>
+                    <div x-data="{ open: false, deleted: false }" class="relative">
+                        <button x-on:click="open = !open" class="group flex gap-[3px] py-2" aria-label="Post options">
+                            <span class="bg-pixl-light/40 group-hover:bg-pixl-light/60 size-1"></span>
+                            <span class="bg-pixl-light/40 group-hover:bg-pixl-light/60 size-1"></span>
+                            <span class="bg-pixl-light/40 group-hover:bg-pixl-light/60 size-1"></span>
+                        </button>
+                        <div x-show="open" @click.outside="open = false" x-cloak
+                            class="bg-pixl-dark border-pixl-light/20 absolute right-0 top-full z-10 mt-1 flex flex-col border p-1 text-xs">
+                            @if (Auth::id() && Auth::user()->profile->id === $displayPost->profile->id)
+                                <button x-on:click="
+                                        if (confirm('Delete this post?')) {
+                                            axios.post('{{ route('posts.destroy', $displayPost) }}').then(() => {
+                                                $root.closest('li').remove();
+                                            });
+                                        }
+                                        open = false;
+                                    "
+                                    class="hover:bg-pixl-light/10 w-full px-3 py-1.5 text-left whitespace-nowrap text-red-400 hover:text-red-300">
+                                    Delete
+                                </button>
+                            @endif
+                            <button x-on:click="open = false"
+                                class="hover:bg-pixl-light/10 w-full px-3 py-1.5 text-left whitespace-nowrap">
+                                Copy link
+                            </button>
+                        </div>
+                    </div>
                 </div>
                 <!-- Post content -->
                 <div class="[&_a]:text-pixl mt-4 flex flex-col gap-3 text-sm [&_a]:hover:underline">
@@ -76,16 +98,18 @@
                     <div class="mt-6 flex items-center justify-between gap-4">
                         <div class="flex items-center gap-8">
                             <!-- Like -->
-                            <div class="flex items-center gap-1"
-                                x-data="{
-                                    liked: {{ $displayPost->has_liked ? 'true' : 'false' }},
-                                    count: {{ $displayPost->likes_count }},
-                                    toggle() {
-                                        this.liked = !this.liked;
-                                        this.count += this.liked ? 1 : -1;
-                                        axios.post('{{ route('posts.like', [$displayPost->profile, $displayPost]) }}');
-                                    }
-                                }">
+                            <div class="flex items-center gap-1" x-data="{
+                                        liked: {{ $displayPost->has_liked ? 'true' : 'false' }},
+                                        count: {{ $displayPost->likes_count }},
+                                        toggle() {
+                                            const url = this.liked
+                                                ? '{{ route('posts.unlike', [$displayPost->profile, $displayPost]) }}'
+                                                : '{{ route('posts.like', [$displayPost->profile, $displayPost]) }}';
+                                            this.liked = !this.liked;
+                                            this.count += this.liked ? 1 : -1;
+                                            axios.post(url);
+                                        }
+                                    }">
                                 <button type="button" aria-label="Like" x-on:click="toggle()"
                                     :class="{ 'text-pixl': liked, 'hover:text-pixl': !liked }">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="h-[17px]"
@@ -94,8 +118,7 @@
                                             <path
                                                 d="M5.714 0H2.857v2.857h2.857V0Zm2.858 0H5.714v2.857h2.858V0Zm2.857 2.858H8.57v2.857h2.858V2.858ZM14.288 0h-2.857v2.857h2.857V0Z" />
                                             <path d="M17.143 0h-2.857v2.857h2.857V0ZM20 2.858h-2.857v2.857H20V2.858Z" />
-                                            <path
-                                                d="M20 5.714h-2.857v2.858H20V5.714ZM2.857 2.858H0v2.857h2.857V2.858Z" />
+                                            <path d="M20 5.714h-2.857v2.858H20V5.714ZM2.857 2.858H0v2.857h2.857V2.858Z" />
                                             <path
                                                 d="M2.857 5.714H0v2.858h2.857V5.714Zm2.857 2.858H2.857v2.857h2.857V8.572Zm2.858 2.858H5.714v2.857h2.858v-2.858Zm8.571-2.858h-2.857v2.857h2.857V8.572Zm-2.855 2.858h-2.857v2.857h2.857v-2.858Z" />
                                             <path d="M11.429 14.286H8.57v2.858h2.858v-2.858Z" />
@@ -135,17 +158,16 @@
                                 <span class="text-sm">{{ $displayPost->replies_count }}</span>
                             </div>
                             <!-- Re-post / Quote -->
-                            <div class="flex items-center gap-1"
-                                x-data="{
-                                    reposted: {{ $displayPost->has_reposted ? 'true' : 'false' }},
-                                    count: {{ $displayPost->reposts_count }},
-                                    showQuoteForm: false,
-                                    repost() {
-                                        this.reposted = !this.reposted;
-                                        this.count += this.reposted ? 1 : -1;
-                                        axios.post('{{ route('posts.repost', [$displayPost->profile, $displayPost]) }}');
-                                    }
-                                }">
+                            <div class="flex items-center gap-1" x-data="{
+                                        reposted: {{ $displayPost->has_reposted ? 'true' : 'false' }},
+                                        count: {{ $displayPost->reposts_count }},
+                                        showQuoteForm: false,
+                                        repost() {
+                                            this.reposted = !this.reposted;
+                                            this.count += this.reposted ? 1 : -1;
+                                            axios.post('{{ route('posts.repost', [$displayPost->profile, $displayPost]) }}');
+                                        }
+                                    }">
                                 <div class="relative" x-data="{ open: false }">
                                     <button type="button" aria-label="Re-post" x-on:click="open = !open"
                                         :class="{ 'text-pixl': reposted, 'hover:text-pixl': !reposted }">
@@ -195,12 +217,16 @@
 
                                 <!-- Quote Form -->
                                 <template x-if="showQuoteForm">
-                                    <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4" x-on:click.self="showQuoteForm = false">
+                                    <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
+                                        x-on:click.self="showQuoteForm = false">
                                         <div class="bg-pixl-dark border-pixl-light/20 w-full max-w-lg border p-6">
                                             <h3 class="mb-4 text-lg font-bold">Quote Post</h3>
-                                            <form action="{{ route('posts.quote', [$displayPost->profile, $displayPost]) }}" method="POST">
+                                            <form action="{{ route('posts.quote', [$displayPost->profile, $displayPost]) }}"
+                                                method="POST">
                                                 @csrf
-                                                <textarea name="content" rows="3" class="bg-pixl-dark border-pixl-light/20 focus:border-pixl w-full border p-2 text-sm outline-none" placeholder="Add a comment..."></textarea>
+                                                <textarea name="content" rows="3"
+                                                    class="bg-pixl-dark border-pixl-light/20 focus:border-pixl w-full border p-2 text-sm outline-none"
+                                                    placeholder="Add a comment..."></textarea>
                                                 <div class="mt-4 flex justify-end gap-2">
                                                     <button type="button" x-on:click="showQuoteForm = false"
                                                         class="text-pixl-light/60 hover:text-pixl-light/80 text-sm">Cancel</button>

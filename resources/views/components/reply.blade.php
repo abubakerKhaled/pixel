@@ -20,11 +20,33 @@
                         href="{{ route('profiles.show', $post->profile) }}">{{ '@' . $post->profile->handle }}</a>
                 </p>
             </div>
-            <button class="group flex gap-[3px] py-2" aria-label="Post options">
-                <span class="bg-pixl-light/40 group-hover:bg-pixl-light/60 size-1"></span>
-                <span class="bg-pixl-light/40 group-hover:bg-pixl-light/60 size-1"></span>
-                <span class="bg-pixl-light/40 group-hover:bg-pixl-light/60 size-1"></span>
-            </button>
+            <div x-data="{ open: false }" class="relative">
+                <button x-on:click="open = !open" class="group flex gap-[3px] py-2" aria-label="Post options">
+                    <span class="bg-pixl-light/40 group-hover:bg-pixl-light/60 size-1"></span>
+                    <span class="bg-pixl-light/40 group-hover:bg-pixl-light/60 size-1"></span>
+                    <span class="bg-pixl-light/40 group-hover:bg-pixl-light/60 size-1"></span>
+                </button>
+                <div x-show="open" @click.outside="open = false" x-cloak
+                    class="bg-pixl-dark border-pixl-light/20 absolute right-0 top-full z-10 mt-1 flex flex-col border p-1 text-xs">
+                    @if (Auth::id() && Auth::user()->profile->id === $post->profile->id)
+                        <button x-on:click="
+                                if (confirm('Delete this reply?')) {
+                                    axios.post('{{ route('posts.destroy', $post) }}').then(() => {
+                                        $root.closest('li').remove();
+                                    });
+                                }
+                                open = false;
+                            "
+                            class="hover:bg-pixl-light/10 w-full px-3 py-1.5 text-left whitespace-nowrap text-red-400 hover:text-red-300">
+                            Delete
+                        </button>
+                    @endif
+                    <button x-on:click="open = false"
+                        class="hover:bg-pixl-light/10 w-full px-3 py-1.5 text-left whitespace-nowrap">
+                        Copy link
+                    </button>
+                </div>
+            </div>
         </div>
         <div class="mt-4 flex flex-col gap-3 text-sm">
             {!! $post->content !!}
@@ -34,8 +56,20 @@
             <div class="mt-6 flex items-center justify-between gap-4">
                 <div class="flex items-center gap-8">
                     <!-- Like -->
-                    <div class="flex items-center gap-1">
-                        <button aria-label="Like" class="hover:text-pixl">
+                    <div class="flex items-center gap-1" x-data="{
+                                liked: {{ $post->has_liked ? 'true' : 'false' }},
+                                count: {{ $post->likes_count }},
+                                toggle() {
+                                    const url = this.liked
+                                        ? '{{ route('posts.unlike', [$post->profile, $post]) }}'
+                                        : '{{ route('posts.like', [$post->profile, $post]) }}';
+                                    this.liked = !this.liked;
+                                    this.count += this.liked ? 1 : -1;
+                                    axios.post(url);
+                                }
+                            }">
+                        <button type="button" aria-label="Like" x-on:click="toggle()"
+                            :class="{ 'text-pixl': liked, 'hover:text-pixl': !liked }">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="h-[17px]" viewBox="0 0 20 17">
                                 <g fill="currentColor" clip-path="url(#a)">
                                     <path
@@ -53,7 +87,7 @@
                                 </defs>
                             </svg>
                         </button>
-                        <span class="text-sm">{{ $post->likes_count }}</span>
+                        <span class="text-sm" :class="{ 'text-pixl': liked }" x-text="count"></span>
                     </div>
                     <!-- Comment -->
                     <div class="flex items-center gap-1">
