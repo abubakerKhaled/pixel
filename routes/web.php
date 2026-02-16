@@ -31,71 +31,39 @@ Route::middleware('auth')->group(function () {
     Route::get('/home', [PostController::class, 'index'])->name('posts.index');
     Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
     Route::scopeBindings()->group(function () {
-        Route::post('/{profile:handle}/post/{post}/reply', 
-            [PostController::class, 'reply'])->name('posts.reply');
+        Route::post(
+            '/{profile:handle}/post/{post}/reply',
+            [PostController::class, 'reply']
+        )->name('posts.reply');
 
-        Route::post('/{profile:handle}/post/{post}/repost', 
-            [PostController::class, 'repost'])->name('posts.repost');
+        Route::post(
+            '/{profile:handle}/post/{post}/repost',
+            [PostController::class, 'repost']
+        )->name('posts.repost');
 
-        Route::post('/posts/{post}/destroy', 
-            [PostController::class, 'destroy'])->name('posts.destroy');
+        Route::post(
+            '/posts/{post}/destroy',
+            [PostController::class, 'destroy']
+        )->name('posts.destroy');
 
-        Route::post('/{profile:handle}/post/{post}/quote', 
-            [PostController::class, 'quote'])->name('posts.quote');
+        Route::post(
+            '/{profile:handle}/post/{post}/quote',
+            [PostController::class, 'quote']
+        )->name('posts.quote');
 
-        Route::post('/{profile:handle}/post/{post}/like', 
-            [PostController::class, 'like'])->name('posts.like');
+        Route::post(
+            '/{profile:handle}/post/{post}/like',
+            [PostController::class, 'like']
+        )->name('posts.like');
 
-        Route::post('/{profile:handle}/post/{post}/unlike', 
-            [PostController::class, 'unlike'])->name('posts.unlike');
+        Route::post(
+            '/{profile:handle}/post/{post}/unlike',
+            [PostController::class, 'unlike']
+        )->name('posts.unlike');
     });
 
     Route::post('/{profile:handle}/follow', [ProfileController::class, 'follow'])->name('profiles.follow');
     Route::post('/{profile:handle}/unfollow', [ProfileController::class, 'unfollow'])->name('profiles.unfollow');
-});
-
-Route::get('/feed', function () {
-    $feedItems = [
-        [
-            'profile' => [
-                'displayName' => 'Michael',
-                'handle' => 'mmich_jj',
-                'avatar' => '/images/michael.png',
-            ],
-            'postedAgo' => '3', // we will compute it from the date it was published at
-            'content' => <<<'str'
-                <p>
-                    I made this! <a href="#">#myartwork</a> <a href="#">#pixl</a>
-                </p>
-                <img src="/images/simon-chilling.png" alt="" />
-            str,
-            'likeCount' => 23,
-            'replayCount' => 22,
-            'repostCount' => 132,
-        ],
-    ];
-
-    $replies = [
-        [
-            'profile' => [
-                'displayName' => 'Simon',
-                'handle' => 'simonswiss',
-                'avatar' => '/images/simon-chilling.png',
-            ],
-            'postedAgo' => '3', // we will compute it from the date it was published at
-            'content' => <<<'str'
-                <p>Heh — this looks just like me!</p>
-            str,
-            'likeCount' => 54,
-            'replayCount' => 97,
-            'repostCount' => 45,
-        ],
-    ];
-
-    $feedItems = json_decode(json_encode($feedItems));
-    $replies = json_decode(json_encode($replies));
-
-    return view('feed', compact(['feedItems', 'replies']));
 });
 
 Route::get('/{profile:handle}', [ProfileController::class, 'show'])->name('profiles.show');

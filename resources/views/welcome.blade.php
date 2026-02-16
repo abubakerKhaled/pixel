@@ -118,17 +118,17 @@
                 </div>
                 <div class="mt-8 flex flex-col gap-3 text-center sm:mt-12 md:mt-16 md:w-68">
                     <a class="border border-pixl/50 bg-pixl-dark/50 px-4 py-1.5 text-pixl transition-all duration-200 hover:border-pixl/60 hover:bg-pixl-dark/60 active:border-pixl/75 active:bg-pixl-dark/75"
-                        href="/feed" role="button">Sign in with Google</a>
+                        href="{{ route('posts.index') }}" role="button">Sign in with Google</a>
                     <a class="border border-pixl/50 bg-pixl-dark/50 px-4 py-1.5 text-pixl transition-all duration-200 hover:border-pixl/60 hover:bg-pixl-dark/60 active:border-pixl/75 active:bg-pixl-dark/75"
-                        href="/feed" role="button">Sign in with Apple</a>
+                        href="{{ route('posts.index') }}" role="button">Sign in with Apple</a>
                     <p>or</p>
                     <a class="border border-transparent bg-pixl px-4 py-1.5 text-pixl-dark transition-all duration-200 hover:bg-pixl/90 active:bg-pixl/95"
-                        href="/feed" role="button">Create an Account</a>
+                        href="{{ route('posts.index') }}" role="button">Create an Account</a>
                     <p class="mt-12 text-left text-sm sm:mt-16 md:mt-20">
                         Already have an account?
                     </p>
                     <a class="border border-transparent bg-pixl px-4 py-1.5 text-pixl-dark transition-all duration-200 hover:bg-pixl/90 active:bg-pixl/95"
-                        href="/feed" role="button">Sign in</a>
+                        href="{{ route('posts.index') }}" role="button">Sign in</a>
                 </div>
             </div>
         </div>

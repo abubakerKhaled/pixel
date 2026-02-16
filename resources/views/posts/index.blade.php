@@ -1,6 +1,4 @@
 <x-layout title="PIXL - Home">
-    @include('partials.navigation')
-
     <!-- Content -->
     <main class="-mx-4 flex grow flex-col gap-4 overflow-y-auto px-4 py-4">
         <div class="h-full">
@@ -34,6 +32,4 @@
             <div class="h-20 bg-[url(/images/white-noise.gif)]"></div>
         </footer>
     </main>
-
-    @include('partials.aside')
 </x-layout>
