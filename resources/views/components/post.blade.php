@@ -63,15 +63,15 @@
                         </button>
                         <div x-show="open" @click.outside="open = false" x-cloak
                             class="bg-pixl-dark border-pixl-light/20 absolute right-0 top-full z-10 mt-1 flex flex-col border p-1 text-xs">
-                            @if (Auth::id() && Auth::user()->profile->id === $displayPost->profile->id)
+                            @if (Auth::id() && Auth::user()?->profile?->id === $displayPost->profile->id)
                                 <button x-on:click="
-                                            if (confirm('Delete this post?')) {
-                                                axios.post('{{ route('posts.destroy', $displayPost) }}').then(() => {
-                                                    $root.closest('li').remove();
-                                                });
-                                            }
-                                            open = false;
-                                        "
+                                                if (confirm('Delete this post?')) {
+                                                    axios.post('{{ route('posts.destroy', $displayPost) }}').then(() => {
+                                                        $root.closest('li').remove();
+                                                    });
+                                                }
+                                                open = false;
+                                            "
                                     class="hover:bg-pixl-light/10 w-full px-3 py-1.5 text-left whitespace-nowrap text-red-400 hover:text-red-300">
                                     Delete
                                 </button>

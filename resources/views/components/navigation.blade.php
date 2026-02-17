@@ -44,13 +44,13 @@
                 <li><a class="hover:underline" href="#">Jobs</a></li>
                 <li><a class="hover:underline" href="#">Communities</a></li>
                 <li><a class="hover:underline" href="#">Premium</a></li>
-                <li><a class="hover:underline" href="{{ route('profiles.show', Auth::user()->profile) }}">Profile</a>
+                <li><a class="hover:underline" href="{{ route('profiles.show', Auth::user()?->profile) }}">Profile</a>
                 </li>
                 <li><a class="hover:underline" href="#">More</a></li>
             </ul>
         </nav>
     </div>
-    @php($profile = Auth::user()->profile)
+    @php($profile = Auth::user()?->profile)
     @if (!request()->routeIs('posts.index'))
         <div class="flex flex-col gap-6">
             <a href="{{ route('posts.index') }}"

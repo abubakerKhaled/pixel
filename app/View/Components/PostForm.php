@@ -10,14 +10,14 @@ use Illuminate\View\Component;
 
 class PostForm extends Component
 {
-    public Profile $profile;
+    public ?Profile $profile;
 
     /**
      * Create a new component instance.
      */
     public function __construct()
     {
-        $this->profile = Auth::user()->profile;
+        $this->profile = Auth::user()?->profile;
     }
 
     /**
