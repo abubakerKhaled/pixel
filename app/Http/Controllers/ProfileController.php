@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Follow;
-use App\Models\Post;
 use App\Models\Profile;
+use App\Querys\ProfilePageQuery;
+use App\Querys\ProfileWithRepliesQuery;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
@@ -14,17 +15,7 @@ class ProfileController extends Controller
     {
         $profile->loadCount(['following', 'followers']);
 
-        $posts = Post::query()
-            ->where('profile_id', $profile->id)
-            ->whereNull('parent_id')
-            ->with([
-                'profile',
-                'repostOf' => fn ($query) => $query->withCount(['likes', 'reposts', 'replies']),
-                'repostOf.profile',
-            ])
-            ->withCount(['likes', 'reposts', 'replies'])
-            ->latest()
-            ->get();
+        $posts = ProfilePageQuery::for($profile, Auth::user()?->profile)->get();
 
         return view('profiles.show', compact('profile', 'posts'));
     }
@@ -33,31 +24,7 @@ class ProfileController extends Controller
     {
         $profile->loadCount(['following', 'followers']);
 
-        $posts = Post::query()
-            ->where(
-                fn ($q) => $q
-                    ->whereBelongsTo($profile, 'profile')
-                    ->whereNull('parent_id')
-            )
-            ->orWhereHas(
-                'replies',
-                fn ($q) => $q
-                    ->whereBelongsTo($profile, 'profile')
-            )
-            ->with([
-                'profile',
-                'repostOf' => fn ($q) => $q->withCount(['likes', 'reposts', 'replies']),
-                'repostOf.profile',
-                'parent.profile',
-                'replies' => fn ($q) => $q
-                    ->whereBelongsTo($profile, 'profile')
-                    ->with('profile')
-                    ->withCount(['likes', 'reposts', 'replies'])
-                    ->oldest(),
-            ])
-            ->withCount(['likes', 'reposts', 'replies'])
-            ->latest()
-            ->get();
+        $posts = ProfileWithRepliesQuery::for($profile, Auth::user()?->profile)->get();
 
         return view('profiles.replies', compact('profile', 'posts'));
     }

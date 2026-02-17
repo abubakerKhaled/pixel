@@ -12,7 +12,6 @@ class TimelineQuery
 {
     public function __construct(private Profile $viewer) {}
 
-    // This pattern is called a Named Constructor or Static Factory Method.
     public static function forViewer(Profile $viewer): self
     {
         return new self($viewer);
