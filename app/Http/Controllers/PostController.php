@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreatePostRequest;
-use App\Models\Post;
 use App\Models\Like;
+use App\Models\Post;
 use App\Models\Profile;
 use App\Querys\TimelineQuery;
 use Illuminate\Support\Facades\Auth;
@@ -23,12 +23,12 @@ class PostController extends Controller
     public function show(Profile $profile, Post $post)
     {
         $post->load([
-            'replies' => fn($q) => $q
+            'replies' => fn ($q) => $q
                 ->withCount(['likes', 'replies', 'reposts'])
                 ->with([
                     'profile',
                     'parent.profile',
-                    'replies' => fn($q) => $q
+                    'replies' => fn ($q) => $q
                         ->withCount(['likes', 'replies', 'reposts'])
                         ->with(['profile', 'parent.profile'])
                         ->oldest(),
@@ -102,6 +102,7 @@ class PostController extends Controller
         }
 
         $post->delete();
+
         return response()->json(['success' => true]);
     }
 }

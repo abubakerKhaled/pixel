@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Follow;
 use App\Models\Post;
 use App\Models\Profile;
-use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class ProfileController extends Controller
 {

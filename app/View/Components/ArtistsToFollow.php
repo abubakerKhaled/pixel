@@ -1,10 +1,11 @@
 <?php
+
 namespace App\View\Components;
 
 use App\Models\Profile;
-use Illuminate\Support\Facades\Auth;
 use Closure;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Component;
 
 class ArtistsToFollow extends Component
@@ -20,15 +21,15 @@ class ArtistsToFollow extends Component
     /**
      * Get the view / contents that represent the component.
      */
-    public function render(): View | Closure | string
+    public function render(): View|Closure|string
     {
-        if(Auth::check()) {
+        if (Auth::check()) {
             $profile = Auth::user()->profile;
 
             $query = Profile::query()
-                ->whereDoesntHave('followers', fn($q) => $q
+                ->whereDoesntHave('followers', fn ($q) => $q
                     ->where('follower_profile_id', $profile->id))
-                    ->where('id', '!=', $profile->id);
+                ->where('id', '!=', $profile->id);
         } else {
             $query = Profile::query();
         }

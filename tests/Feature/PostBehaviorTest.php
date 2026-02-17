@@ -4,11 +4,10 @@ use App\Models\Post;
 use App\Models\Profile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-
 uses(RefreshDatabase::class);
 
 // publish testing
-test('it allows a profile to publish a post', function(){
+test('it allows a profile to publish a post', function () {
     $profile = Profile::factory()->create();
 
     $post = Post::publish($profile, 'Hello World');
@@ -20,7 +19,7 @@ test('it allows a profile to publish a post', function(){
 });
 
 // reply testing
-test('can reply to post', function(){
+test('can reply to post', function () {
     $orginal = Post::factory()->create();
 
     $replier = Profile::factory()->create();
@@ -30,8 +29,7 @@ test('can reply to post', function(){
     expect($orginal->replies)->toHaveCount(1);
 });
 
-
-test('can have many replies', function(){
+test('can have many replies', function () {
     $orginal = Post::factory()->create();
 
     $replies = Post::factory()->count(4)->reply($orginal)->create();
@@ -42,7 +40,7 @@ test('can have many replies', function(){
 });
 
 // repostt testing
-test('create plain repost', function(){
+test('create plain repost', function () {
     $orginal = Post::factory()->create();
 
     $reposter = Profile::factory()->create();
@@ -53,8 +51,7 @@ test('create plain repost', function(){
     expect($repost->content)->toBeNull();
 });
 
-
-test('can have many reposts', function(){
+test('can have many reposts', function () {
     $orginal = Post::factory()->create();
 
     $reposts = Post::factory()->count(4)->repost($orginal)->create();
@@ -65,7 +62,7 @@ test('can have many reposts', function(){
 });
 
 // quote testing
-test('create plain quote', function(){
+test('create plain quote', function () {
     $quote = 'this is a quote';
     $orginal = Post::factory()->create();
 
@@ -77,9 +74,8 @@ test('create plain quote', function(){
     expect($quote->content === $quote);
 });
 
-
 // duplicate reposts
-test('prevents duplicate reposts', function() {
+test('prevents duplicate reposts', function () {
     $original = Post::factory()->create();
     $profile = Profile::factory()->create();
 
@@ -90,7 +86,7 @@ test('prevents duplicate reposts', function() {
 });
 
 // remove a repost
-test('remove repost', function() {
+test('remove repost', function () {
     $original = Post::factory()->create();
     $repost = Post::factory()->repost($original)->create();
 

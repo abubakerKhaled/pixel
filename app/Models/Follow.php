@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -32,7 +33,7 @@ class Follow extends Model
         }
 
         return static::firstOrCreate([
-            'follower_profile_id'  => $follower->id,
+            'follower_profile_id' => $follower->id,
             'following_profile_id' => $following->id,
         ]);
     }
@@ -44,8 +45,8 @@ class Follow extends Model
         }
 
         return static::query()
-        ->where('follower_profile_id', $follower->id)
-        ->where('following_profile_id', $following->id)
-        ->delete() > 0;
+            ->where('follower_profile_id', $follower->id)
+            ->where('following_profile_id', $following->id)
+            ->delete() > 0;
     }
 }

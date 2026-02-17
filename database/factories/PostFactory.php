@@ -30,7 +30,7 @@ class PostFactory extends Factory
     {
         return $this->state([
             'parent_id' => $parentPost->id,
-            'content' => $this->faker->realText(200)
+            'content' => $this->faker->realText(200),
         ]);
     }
 
@@ -38,7 +38,7 @@ class PostFactory extends Factory
     {
         return $this->state([
             'repost_of_id' => $originalPost->id,
-            'content' => null
+            'content' => null,
         ]);
     }
 
@@ -46,7 +46,7 @@ class PostFactory extends Factory
     {
         return $this->state([
             'parent_id' => $originalPost->id,
-            'content' => $this->faker->realText(200)
+            'content' => $this->faker->realText(200),
         ]);
     }
 }

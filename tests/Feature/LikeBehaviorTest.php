@@ -5,9 +5,7 @@ use App\Models\Post;
 use App\Models\Profile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-
 uses(RefreshDatabase::class);
-
 
 test('profile can like a post', function () {
     $profile = Profile::factory()->create();
@@ -25,8 +23,7 @@ test('profile can like a post', function () {
     expect($like->profile->is($profile))->toBeTrue();
 });
 
-
-test('prevents duplicate likes', function() {
+test('prevents duplicate likes', function () {
     $profile = Profile::factory()->create();
     $post = Post::factory()->create();
 
@@ -36,7 +33,7 @@ test('prevents duplicate likes', function() {
     expect($l1->id)->toBe($l2->id);
 });
 
-test('remove a like', function() {
+test('remove a like', function () {
     $profile = Profile::factory()->create();
     $post = Post::factory()->create();
 

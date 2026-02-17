@@ -13,7 +13,7 @@ class Like extends Model
 
     protected $fillable = [
         'profile_id',
-        'post_id'
+        'post_id',
     ];
 
     public function profile(): BelongsTo
@@ -30,7 +30,7 @@ class Like extends Model
     {
         return static::firstOrCreate([
             'profile_id' => $profile->id,
-            'post_id' => $post->id
+            'post_id' => $post->id,
         ]);
     }
 
@@ -41,5 +41,4 @@ class Like extends Model
             ->where('post_id', $post->id)
             ->delete() > 0;
     }
-
 }

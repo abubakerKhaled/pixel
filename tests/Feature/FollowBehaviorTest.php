@@ -1,17 +1,15 @@
 <?php
 
-
 use App\Models\Follow;
 use App\Models\Profile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-
 
 uses(RefreshDatabase::class);
 
 test('profile cannot follow itself', function () {
     $profile = Profile::factory()->create();
 
-    expect(fn() => Follow::createFollow($profile, $profile))
+    expect(fn () => Follow::createFollow($profile, $profile))
         ->toThrow(\InvalidArgumentException::class, 'A profile cannot follow itself');
 });
 
