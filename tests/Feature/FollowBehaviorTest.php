@@ -9,7 +9,7 @@ uses(RefreshDatabase::class);
 test('profile cannot follow itself', function () {
     $profile = Profile::factory()->create();
 
-    expect(fn () => Follow::createFollow($profile, $profile))
+    expect(fn (): \App\Models\Follow => Follow::createFollow($profile, $profile))
         ->toThrow(\InvalidArgumentException::class, 'A profile cannot follow itself');
 });
 

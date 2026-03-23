@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreatePostRequest;
@@ -12,54 +14,54 @@ use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
-    public function index()
+    public function index(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
         $profile = Auth::user()->profile;
 
         $posts = TimelineQuery::forViewer($profile)->get();
 
-        return view('posts.index', compact('profile', 'posts'));
+        return view('posts.index', ['profile' => $profile, 'posts' => $posts]);
     }
 
-    public function show(Profile $profile, Post $post)
+    public function show(Profile $profile, Post $post): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
         $post = PostThreadQuery::for($post, Auth::user()?->profile)->load();
 
-        return view('posts.show', compact('post'));
+        return view('posts.show', ['post' => $post]);
     }
 
-    public function store(CreatePostRequest $request)
+    public function store(CreatePostRequest $createPostRequest): \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
     {
         $profile = Auth::user()->profile;
 
-        $post = Post::publish($profile, $request->validated()['content']);
+        Post::publish($profile, $createPostRequest->validated()['content']);
 
         return redirect(route('posts.index'));
     }
 
-    public function reply(CreatePostRequest $request, Profile $profile, Post $post)
+    public function reply(CreatePostRequest $createPostRequest, Profile $profile, Post $post): \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
     {
         $currentProfile = Auth::user()->profile;
 
-        $post = Post::reply($currentProfile, $post, $request->validated()['content']);
+        Post::reply($currentProfile, $post, $createPostRequest->validated()['content']);
 
         return redirect(route('posts.index'));
     }
 
-    public function repost(Profile $profile, Post $post)
+    public function repost(Profile $profile, Post $post): \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
     {
         $currentProfile = Auth::user()->profile;
 
-        $post = Post::repost($currentProfile, $post);
+        Post::repost($currentProfile, $post);
 
         return redirect(route('posts.index'));
     }
 
-    public function quote(CreatePostRequest $request, Profile $profile, Post $post)
+    public function quote(CreatePostRequest $createPostRequest, Profile $profile, Post $post): \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
     {
         $currentProfile = Auth::user()->profile;
 
-        $post = Post::repost($currentProfile, $post, $request->validated()['content']);
+        Post::repost($currentProfile, $post, $createPostRequest->validated()['content']);
 
         return redirect(route('posts.index'));
     }
@@ -70,7 +72,7 @@ class PostController extends Controller
 
         $like = Like::createLike($currentProfile, $post);
 
-        return response()->json(compact('like'));
+        return response()->json(['like' => $like]);
     }
 
     public function unlike(Profile $profile, Post $post)
@@ -79,7 +81,7 @@ class PostController extends Controller
 
         $success = Like::removeLike($currentProfile, $post);
 
-        return response()->json(compact('success'));
+        return response()->json(['success' => $success]);
     }
 
     public function destroy(Post $post)

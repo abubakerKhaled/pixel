@@ -79,10 +79,10 @@ test('prevents duplicate reposts', function () {
     $original = Post::factory()->create();
     $profile = Profile::factory()->create();
 
-    $r1 = Post::repost($profile, $original);
+    $post = Post::repost($profile, $original);
     $r2 = Post::repost($profile, $original);
 
-    expect($r1->id)->toBe($r2->id);
+    expect($post->id)->toBe($r2->id);
 });
 
 // remove a repost

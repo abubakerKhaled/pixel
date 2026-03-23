@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Querys;
 
 use App\Models\Post;
@@ -19,19 +21,19 @@ class ProfileWithRepliesQuery
 
     public function paginate(int $perPage = 20): LengthAwarePaginator
     {
-        return $this->baseQuery()->paginate($perPage)->through(fn ($p) => $this->normalize($p));
+        return $this->baseQuery()->paginate($perPage)->through(fn (\App\Models\Post $post) => $this->normalize($post));
     }
 
     public function get(): Collection
     {
-        return $this->baseQuery()->get()->map(fn ($p) => $this->normalize($p));
+        return $this->baseQuery()->get()->map(fn (\App\Models\Post $post) => $this->normalize($post));
     }
 
     private function baseQuery(): Builder
     {
         $viewerId = $this->visitor?->id ?? 0;
 
-        $posts = Post::query()
+        return Post::query()
             ->where(fn ($q) => $q
                 ->whereBelongsTo($this->owner, 'profile')
                 ->whereNull('parent_id')
@@ -59,11 +61,9 @@ class ProfileWithRepliesQuery
                 'repostOf as repost_original' => fn ($q) => $q->whereHas('reposts', fn ($q) => $q->where('profile_id', $viewerId)),
             ])
             ->latest();
-
-        return $posts;
     }
 
-    private function normalize(Post $post)
+    private function normalize(Post $post): Post
     {
         if ($post->isRepost() && is_null($post->content)) {
             $post->repostOf->has_liked = (bool) $post->like_original;

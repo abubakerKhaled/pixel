@@ -27,10 +27,10 @@ test('prevents duplicate likes', function () {
     $profile = Profile::factory()->create();
     $post = Post::factory()->create();
 
-    $l1 = Like::createLike($profile, $post);
+    $like = Like::createLike($profile, $post);
     $l2 = Like::createLike($profile, $post);
 
-    expect($l1->id)->toBe($l2->id);
+    expect($like->id)->toBe($l2->id);
 });
 
 test('remove a like', function () {
