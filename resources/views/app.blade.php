@@ -6,7 +6,7 @@
     <meta name="color-scheme" content="dark" />
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     
-    @vite(['resources/css/app.css', 'resources/js/app.js', "resources/js/Pages/{$page['component']}.vue"])
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     @inertiaHead
 </head>
 <body class="bg-pixl-dark text-pixl-light font-sans antialiased">

@@ -64,7 +64,7 @@ const timeAgo = computed(() => {
 <template>
     <li class="flex flex-col not-first:pt-2.5">
         <!-- Pure repost indicator -->
-        <div v-if="isPureRepost" class="flex items-center gap-2 mb-2 ml-14 text-pixl-light/50 text-xs">
+        <div v-if="isPureRepost && post.profile" class="flex items-center gap-2 mb-2 ml-14 text-pixl-light/50 text-xs">
             <RepostIcon class="h-3!" />
             <span>
                 <Link :href="profileShow.url(post.profile)" class="hover:underline">
@@ -74,7 +74,7 @@ const timeAgo = computed(() => {
             </span>
         </div>
 
-        <div class="flex items-start gap-4">
+        <div v-if="displayPost?.profile" class="flex items-start gap-4">
             <!-- Avatar -->
             <Link :href="profileShow.url(displayPost.profile)" class="shrink-0">
                 <img :src="displayPost.profile.avatar_url"
