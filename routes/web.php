@@ -5,9 +5,10 @@ use App\Http\Controllers\ProfileController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
-Route::get('/', function (): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View {
-    return view('welcome');
+Route::get('/', function () {
+    return Inertia::render('Welcome');
 });
 
 Route::get('/dev/login', function () {

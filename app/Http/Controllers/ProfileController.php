@@ -4,31 +4,40 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PostResource;
+use App\Http\Resources\ProfileResource;
 use App\Models\Follow;
 use App\Models\Profile;
 use App\Querys\ProfilePageQuery;
 use App\Querys\ProfileWithRepliesQuery;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\View\View;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class ProfileController extends Controller
 {
-    public function show(Profile $profile): View
+    public function show(Profile $profile): Response
     {
         $profile->loadCount(['following', 'followers']);
 
         $posts = ProfilePageQuery::for($profile, Auth::user()?->profile)->get();
 
-        return view('profiles.show', ['profile' => $profile, 'posts' => $posts]);
+        return Inertia::render('Profiles/Show', [
+            'profile' => new ProfileResource($profile),
+            'posts' => PostResource::collection($posts),
+        ]);
     }
 
-    public function replies(Profile $profile): View
+    public function replies(Profile $profile): Response
     {
         $profile->loadCount(['following', 'followers']);
 
         $posts = ProfileWithRepliesQuery::for($profile, Auth::user()?->profile)->get();
 
-        return view('profiles.replies', ['profile' => $profile, 'posts' => $posts]);
+        return Inertia::render('Profiles/Replies', [
+            'profile' => new ProfileResource($profile),
+            'posts' => PostResource::collection($posts),
+        ]);
     }
 
     public function follow(Profile $profile)

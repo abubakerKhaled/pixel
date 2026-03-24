@@ -5,29 +5,36 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreatePostRequest;
+use App\Http\Resources\PostResource;
 use App\Models\Like;
 use App\Models\Post;
 use App\Models\Profile;
 use App\Querys\PostThreadQuery;
 use App\Querys\TimelineQuery;
 use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class PostController extends Controller
 {
-    public function index(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+    public function index(): Response
     {
         $profile = Auth::user()->profile;
 
         $posts = TimelineQuery::forViewer($profile)->get();
 
-        return view('posts.index', ['profile' => $profile, 'posts' => $posts]);
+        return Inertia::render('Posts/Index', [
+            'posts' => PostResource::collection($posts),
+        ]);
     }
 
-    public function show(Profile $profile, Post $post): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+    public function show(Profile $profile, Post $post): Response
     {
         $post = PostThreadQuery::for($post, Auth::user()?->profile)->load();
 
-        return view('posts.show', ['post' => $post]);
+        return Inertia::render('Posts/Show', [
+            'post' => new PostResource($post),
+        ]);
     }
 
     public function store(CreatePostRequest $createPostRequest): \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
