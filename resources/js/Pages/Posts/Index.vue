@@ -13,8 +13,8 @@ defineProps({
 
 <template>
     <Layout title="PIXL - Home">
-        <main class="-mx-4 flex grow flex-col gap-4 overflow-y-auto px-4 py-4">
-            <div class="h-full">
+        <main class="-mx-4 flex grow flex-col min-h-0 gap-4 overflow-y-auto px-4 py-4">
+            <div class="w-full">
                 <nav class="overflow-x-auto [scrollbar-width:none]">
                     <ul class="flex min-w-max justify-end gap-8 text-sm">
                         <li><a href="#">For you</a></li>

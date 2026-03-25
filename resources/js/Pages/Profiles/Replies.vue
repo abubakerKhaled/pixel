@@ -20,7 +20,7 @@ defineProps({
 
 <template>
     <Layout title="PIXL - Profile">
-        <main class="-mx-4 flex grow flex-col gap-4 overflow-y-auto px-4 py-4">
+        <main class="-mx-4 flex grow flex-col min-h-0 gap-4 overflow-y-auto px-4 py-4">
             <Link :href="index.url()" class="group flex items-baseline gap-1.5">
                 <BackArrowIcon />
                 <span>back</span>
