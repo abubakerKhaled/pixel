@@ -44,6 +44,9 @@ const canDelete = computed(() => authProfile && authProfile.id === displayPost.v
 // Options dropdown — replaces x-data="{ open: false }"
 const showOptions = ref(false)
 
+// Reply form toggle
+const showReplyForm = ref(false)
+
 // Delete post — replaces Alpine's axios.post + DOM removal
 const deletePost = () => {
     if (confirm('Delete this post?')) {
@@ -139,7 +142,7 @@ const timeAgo = computed(() => {
                         <div class="flex items-center gap-8">
                             <LikeButton :post="displayPost" :active="displayPost.has_liked ?? false"
                                 :count="displayPost.likes_count ?? 0" />
-                            <ReplyButton :count="displayPost.replies_count ?? 0" />
+                            <ReplyButton :count="displayPost.replies_count ?? 0" @click="showReplyForm = !showReplyForm" />
                             <RepostButton :post="displayPost" :active="displayPost.has_reposted ?? false"
                                 :count="displayPost.reposts_count ?? 0" />
                         </div>
@@ -150,7 +153,7 @@ const timeAgo = computed(() => {
                     </div>
 
                     <!-- Reply form -->
-                    <ReplyForm :post="displayPost" />
+                    <ReplyForm v-if="showReplyForm" :post="displayPost" @submitted="showReplyForm = false" />
 
                     <!-- Replies list -->
                     <ol v-if="showReplies && displayPost.replies?.length" class="mt-4">

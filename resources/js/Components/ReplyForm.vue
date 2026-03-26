@@ -21,10 +21,15 @@ const form = useForm({
     content: '',
 })
 
+const emit = defineEmits(['submitted'])
+
 // Submit reply — posts to the reply endpoint for this specific post
 const submit = () => {
     form.post(reply.url({ profile: props.post.profile, post: props.post }), {
-        onSuccess: () => form.reset(),
+        onSuccess: () => {
+            form.reset()
+            emit('submitted')
+        },
     })
 }
 </script>
