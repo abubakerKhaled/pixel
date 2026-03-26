@@ -2,6 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use App\Http\Resources\ProfileResource;
+use App\Models\Profile;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -40,6 +42,23 @@ class HandleInertiaRequests extends Middleware
             'auth' => fn (): array => [
                 'user' => $request->user()?->load('profile'),
             ],
+            'artistsToFollow' => function () use ($request): array {
+                $currentProfile = $request->user()?->profile;
+
+                if (! $currentProfile) {
+                    return [];
+                }
+
+                $followingIds = $currentProfile->following()->pluck('following_profile_id');
+
+                return ProfileResource::collection(
+                    Profile::whereNotIn('id', $followingIds)
+                        ->where('id', '!=', $currentProfile->id)
+                        ->inRandomOrder()
+                        ->limit(5)
+                        ->get()
+                )->resolve();
+            },
         ];
     }
 }

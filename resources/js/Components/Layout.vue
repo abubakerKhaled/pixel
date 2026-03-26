@@ -1,5 +1,6 @@
 <script setup>
-import { Head } from '@inertiajs/vue3'
+import { computed } from 'vue'
+import { Head, usePage } from '@inertiajs/vue3'
 import Navigation from '@/Components/Navigation.vue'
 import Aside from '@/Components/Aside.vue'
 
@@ -8,17 +9,15 @@ defineProps({
         type: String,
         default: 'PIXL',
     },
-    artistsToFollow: {
-        type: Array,
-        default: () => [],
-    },
 })
+
+const artistsToFollow = computed(() => usePage().props.artistsToFollow ?? [])
 </script>
 
 <template>
     <Head :title="title" />
 
-    <div class="bg-pixl-dark text-pixl-light flex gap-8 px-4 sm:h-dvh sm:overflow-clip xl:gap-16">
+    <div class="bg-pixl-dark text-pixl-light flex gap-8 px-4 sm:h-screen sm:overflow-hidden xl:gap-16">
         <Navigation />
 
         <!-- Page content injected here via slot -->
