@@ -26,7 +26,7 @@ class ProfileFactory extends Factory
             'display_name' => $this->faker->name(),
             'handle' => $handle,
             'bio' => $this->faker->sentence(3, true),
-            'avatar_url' => 'https://dummyimage.com/640x480/'.ltrim($bgColor, '#').'/'.ltrim($textColor, '#'),
+            'avatar_url' => 'https://i.pravatar.cc/300?u=' . $handle,
             'cover_url' => "https://dummyimage.com/1400x640/333/f76a00?text={$handle}",
         ];
     }
