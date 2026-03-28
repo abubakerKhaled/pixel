@@ -10,7 +10,7 @@ const page = usePage()
 const profile = computed(() => page.props.auth?.user?.profile)
 
 // Check if current page is the feed (to hide/show Post button)
-const isHomePage = computed(() => page.url.startsWith('/home'))
+const isHomePage = computed(() => usePage().url === '/home')
 </script>
 
 <template>
@@ -24,7 +24,9 @@ const isHomePage = computed(() => page.url.startsWith('/home'))
             <!-- Navigation links -->
             <nav class="mt-10">
                 <ul class="flex flex-col gap-3.5">
-                    <li><Link class="hover:underline" :href="index.url()">Home</Link></li>
+                    <li>
+                        <Link :class="usePage().url.startsWith('/home') ? 'text-pixl' : 'hover:underline'" :href="index.url()">Home</Link>
+                    </li>
                     <li><a class="hover:underline" href="#">Explore</a></li>
                     <!-- Active item -->
                     <li class="-ml-4 flex items-center gap-2">
