@@ -12,6 +12,7 @@ use App\Models\Profile;
 use App\Querys\PostThreadQuery;
 use App\Querys\TimelineQuery;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -91,16 +92,19 @@ class PostController extends Controller
         return response()->json(['success' => $success]);
     }
 
-    public function destroy(Post $post)
+    public function destroy(Profile $profile, Post $post): \Illuminate\Http\RedirectResponse
     {
-        $currentProfile = Auth::user()->profile;
-
-        if ($post->profile->id !== $currentProfile->id) {
-            abort(403, 'Unauthorized');
+        // Policy gates deletion — only the post owner is authorized
+        if (Gate::allows('update', $post)) {
+            $post->delete();
         }
 
-        $post->delete();
+        // Delete the current user's repost — scoped to auth user, no extra authorization needed
+        $post->reposts()
+            ->where('profile_id', Auth::user()->profile->id)
+            ->first()
+            ?->delete();
 
-        return response()->json(['success' => true]);
+        return back();
     }
 }

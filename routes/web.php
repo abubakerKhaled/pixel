@@ -43,7 +43,7 @@ Route::middleware('auth')->group(function () {
         )->name('posts.repost');
 
         Route::post(
-            '/posts/{post}/destroy',
+            '/{profile:handle}/post/{post}/destroy',
             [PostController::class, 'destroy']
         )->name('posts.destroy');
 

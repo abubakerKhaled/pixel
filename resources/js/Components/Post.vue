@@ -1,7 +1,6 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { Link, usePage, router } from '@inertiajs/vue3'
-import axios from 'axios'
 import RepostIcon from '@/Components/Icons/RepostIcon.vue'
 import LikeButton from '@/Components/LikeButton.vue'
 import ReplyButton from '@/Components/ReplyButton.vue'
@@ -38,8 +37,8 @@ const displayPost = computed(() => isPureRepost.value ? props.post.repost_of : p
 // Is this a quote post? (has content AND is a repost)
 const isQuotePost = computed(() => displayPost.value.is_repost && displayPost.value.content !== null)
 
-// Can the current user delete this post?
-const canDelete = computed(() => authProfile && authProfile.id === displayPost.value.profile?.id)
+// Can the current user delete this post? Driven by server-side PostPolicy
+const canDelete = computed(() => displayPost.value.can_update ?? false)
 
 // Options dropdown — replaces x-data="{ open: false }"
 const showOptions = ref(false)
@@ -47,12 +46,12 @@ const showOptions = ref(false)
 // Reply form toggle
 const showReplyForm = ref(false)
 
-// Delete post — replaces Alpine's axios.post + DOM removal
+// Delete post — uses Inertia router.post since destroy returns back()
 const deletePost = () => {
     if (confirm('Delete this post?')) {
         showOptions.value = false
-        axios.post(destroy.url(displayPost.value)).then(() => {
-            router.reload()
+        router.post(destroy.url({ profile: displayPost.value.profile, post: displayPost.value }), {}, {
+            preserveScroll: true,
         })
     }
 }

@@ -37,6 +37,12 @@ class PostResource extends JsonResource
             'profile' => new ProfileResource($this->whenLoaded('profile')),
             'repost_of' => new PostResource($this->whenLoaded('repostOf')),
             'replies' => PostResource::collection($this->whenLoaded('replies')),
+
+            // Authorization
+            'can_update' => $this->when(
+                auth()->check(),
+                fn () => auth()->user()->can('update', $this->resource)
+            ),
         ];
     }
 }
