@@ -2,6 +2,7 @@
 import Layout from '@/Components/Layout.vue'
 import PostForm from '@/Components/PostForm.vue'
 import Post from '@/Components/Post.vue'
+import Footer from '../../Components/Footer.vue';
 
 defineProps({
     posts: {
@@ -36,11 +37,7 @@ defineProps({
                 <Post v-for="item in posts" :key="item.id" :post="item" />
             </ol>
 
-            <footer class="mt-30 ml-14">
-                <p class="text-center">That's all, folks!</p>
-                <hr class="border-pixl-light/10 my-4" />
-                <div class="h-20 bg-[url(/images/white-noise.gif)]"></div>
-            </footer>
+            <Footer />
         </main>
     </Layout>
 </template>
