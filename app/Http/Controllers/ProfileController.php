@@ -44,17 +44,17 @@ class ProfileController extends Controller
     {
         $currentProfile = Auth::user()->profile;
 
-        $follow = Follow::createFollow($currentProfile, $profile);
+        Follow::createFollow($currentProfile, $profile);
 
-        return response()->json(['follow' => $follow]);
+        return back()->with('success', "You are now following @{$profile->handle}");
     }
 
     public function unfollow(Profile $profile)
     {
         $currentProfile = Auth::user()->profile;
 
-        $success = Follow::removeFollow($currentProfile, $profile);
+        Follow::removeFollow($currentProfile, $profile);
 
-        return response()->json(['success' => $success]);
+        return back()->with('success', "You have unfollowed @{$profile->handle}");
     }
 }

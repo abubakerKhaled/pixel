@@ -3,6 +3,7 @@ import { computed } from 'vue'
 import { Head, usePage } from '@inertiajs/vue3'
 import Navigation from '@/Components/Navigation.vue'
 import Aside from '@/Components/Aside.vue'
+import FlashMessage from './FlashMessage.vue'
 
 defineProps({
     title: {
@@ -24,5 +25,7 @@ const artistsToFollow = computed(() => usePage().props.artistsToFollow ?? [])
         <slot />
 
         <Aside :artists-to-follow="artistsToFollow" />
+
+        <FlashMessage />
     </div>
 </template>

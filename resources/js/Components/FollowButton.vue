@@ -1,6 +1,6 @@
 <script setup>
+import { router } from '@inertiajs/vue3'
 import { ref } from 'vue'
-import axios from 'axios'
 import { follow as followAction, unfollow as unfollowAction } from '@/actions/App/Http/Controllers/ProfileController'
 
 const props = defineProps({
@@ -13,7 +13,14 @@ const following = ref(props.initialFollowing)
 const toggle = () => {
     const action = following.value ? unfollowAction : followAction
     following.value = !following.value
-    axios.post(action.url(props.profile))
+    
+
+    router.post(action.url(props.profile), {}, {
+        preserveScroll: true,
+        onError: () => {
+            following.value = !following.value;
+        }
+    })
 }
 </script>
 

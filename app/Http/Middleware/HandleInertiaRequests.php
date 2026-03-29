@@ -42,6 +42,9 @@ class HandleInertiaRequests extends Middleware
             'auth' => fn (): array => [
                 'user' => $request->user()?->load('profile'),
             ],
+            'flash' => [
+                'success' => fn () => $request->session()->get('success', false)
+            ],
             'artistsToFollow' => function () use ($request): array {
                 $currentProfile = $request->user()?->profile;
 
