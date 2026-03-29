@@ -1,9 +1,9 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { computed } from 'vue'
 import { Link, usePage } from '@inertiajs/vue3'
-import axios from 'axios'
 import Tabs from '@/Components/Tabs.vue'
-import { show as profileShow, replies as profileReplies, follow, unfollow } from '@/actions/App/Http/Controllers/ProfileController'
+import { show as profileShow, replies as profileReplies } from '@/actions/App/Http/Controllers/ProfileController'
+import FollowButton from './FollowButton.vue'
 
 const props = defineProps({
     profile: {
@@ -21,14 +21,7 @@ const auth = usePage().props.auth
 const authUser = auth?.user
 const isOwnProfile = computed(() => authUser && authUser.id === props.profile.user_id)
 
-// Follow/unfollow toggle — replaces Alpine x-data
-const following = ref(props.profile.is_following ?? false)
 
-const toggleFollow = () => {
-    const action = following.value ? unfollow : follow
-    following.value = !following.value
-    axios.post(action.url(props.profile))
-}
 </script>
 
 <template>
@@ -51,10 +44,7 @@ const toggleFollow = () => {
                     class="bg-pixl-dark/50 hover:bg-pixl-dark/60 active:bg-pixl-dark/75 border-pixl/50 hover:border-pixl/60 active:border-pixl/75 text-pixl border px-2 py-1 text-sm">
                     Edit Profile
                 </a>
-                <button v-else type="button" @click="toggleFollow"
-                    class="bg-pixl-dark/50 hover:bg-pixl-dark/60 active:bg-pixl-dark/75 border-pixl/50 hover:border-pixl/60 active:border-pixl/75 text-pixl border px-2 py-1 text-sm">
-                    {{ following ? 'Unfollow' : 'Follow' }}
-                </button>
+                <FollowButton v-else :profile="profile" :initial-following="profile.is_following" />
             </template>
         </div>
 
