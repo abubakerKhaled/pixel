@@ -46,29 +46,29 @@ const isHomePage = computed(() => usePage().url === '/home')
             </nav>
         </div>
 
-        <!-- Post button + user controls -->
-        <div v-if="!isHomePage" class="flex flex-col gap-6">
-            <Link :href="index.url()"
-                class="bg-pixl hover:bg-pixl/90 active:bg-pixl/95 text-pixl-dark border border-transparent px-4 py-3 text-center text-sm">
+        <!-- Bottom section: Post button & User controls -->
+        <div class="flex flex-col gap-6">
+            <Link v-if="!isHomePage" :href="index.url()"
+                class="bg-pixl hover:bg-pixl/90 active:bg-pixl/95 block text-pixl-dark border border-transparent px-4 py-3 text-center text-sm">
                 Post
             </Link>
-        </div>
 
-        <!-- User controls -->
-        <div v-if="profile" class="flex gap-3.5">
-            <Link :href="profileShow.url(profile)" class="shrink-0">
-                <img :src="profile.avatar_url" :alt="'Avatar for ' + profile.display_name"
-                    class="size-11 object-cover" />
-            </Link>
-            <div class="flex flex-col gap-1 text-sm">
-                <p>{{ profile.display_name }}</p>
-                <p class="text-pixl-light/60">@{{ profile.handle }}</p>
+            <!-- User controls -->
+            <div v-if="profile" class="flex gap-3.5">
+                <Link :href="profileShow.url(profile)" class="shrink-0">
+                    <img :src="profile.avatar_url" :alt="'Avatar for ' + profile.display_name"
+                        class="size-11 object-cover" />
+                </Link>
+                <div class="flex flex-col gap-1 text-sm">
+                    <p>{{ profile.display_name }}</p>
+                    <p class="text-pixl-light/60">@{{ profile.handle }}</p>
+                </div>
+                <button class="group flex gap-[3px] py-2" aria-label="Post options">
+                    <span class="bg-pixl-light/40 group-hover:bg-pixl-light/60 size-1"></span>
+                    <span class="bg-pixl-light/40 group-hover:bg-pixl-light/60 size-1"></span>
+                    <span class="bg-pixl-light/40 group-hover:bg-pixl-light/60 size-1"></span>
+                </button>
             </div>
-            <button class="group flex gap-[3px] py-2" aria-label="Post options">
-                <span class="bg-pixl-light/40 group-hover:bg-pixl-light/60 size-1"></span>
-                <span class="bg-pixl-light/40 group-hover:bg-pixl-light/60 size-1"></span>
-                <span class="bg-pixl-light/40 group-hover:bg-pixl-light/60 size-1"></span>
-            </button>
         </div>
     </header>
 </template>
