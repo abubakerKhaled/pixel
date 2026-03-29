@@ -1,6 +1,7 @@
 <script setup>
-import { usePage } from '@inertiajs/vue3'
+import { Link, usePage } from '@inertiajs/vue3'
 import FollowButton from '@/Components/FollowButton.vue'
+import { show as profileShow } from '@/actions/App/Http/Controllers/ProfileController'
 
 defineProps({
     profiles: {
@@ -18,11 +19,13 @@ const authProfile = usePage().props.auth?.user?.profile
         <h2 class="text-pixl-light/60 text-sm">Artists to follow</h2>
         <ol class="mt-4 flex flex-col gap-4">
             <li v-for="profile in profiles" :key="profile.id" class="flex items-center justify-between gap-4">
-                <div class="flex items-center gap-2.5">
-                    <img :src="profile.avatar_url" :alt="'Avatar of ' + profile.display_name"
-                        class="size-8 object-cover" />
-                    <p class="truncate text-sm">{{ profile.handle }}</p>
-                </div>
+                <Link :href="profileShow.url(profile)">
+                    <div class="flex items-center gap-2.5">
+                        <img :src="profile.avatar_url" :alt="'Avatar of ' + profile.display_name"
+                            class="size-8 object-cover" />
+                        <p class="truncate text-sm">{{ profile.handle }}</p>
+                    </div>
+                </Link>
                 <FollowButton
                     v-if="authProfile && authProfile.id !== profile.id"
                     :profile="profile"
