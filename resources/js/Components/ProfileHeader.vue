@@ -2,6 +2,7 @@
 import { ref, computed } from 'vue'
 import { Link, usePage } from '@inertiajs/vue3'
 import axios from 'axios'
+import Tabs from '@/Components/Tabs.vue'
 import { show as profileShow, replies as profileReplies, follow, unfollow } from '@/actions/App/Http/Controllers/ProfileController'
 
 const props = defineProps({
@@ -74,28 +75,24 @@ const toggleFollow = () => {
     </header>
 
     <!-- Navigation tabs -->
-    <div class="mt-6 w-full">
-        <nav class="overflow-x-auto [scrollbar-width:none]">
-            <ul class="flex min-w-max justify-end gap-8 text-sm">
-                <li>
-                    <Link :href="profileShow.url(profile)"
-                        :class="activeTab !== 'posts' ? 'text-pixl-light/60 hover:text-pixl-light/80' : ''">
-                        Posts
-                    </Link>
-                </li>
-                <li>
-                    <Link :href="profileReplies.url(profile)"
-                        :class="activeTab !== 'replies' ? 'text-pixl-light/60 hover:text-pixl-light/80' : ''">
-                        Replies
-                    </Link>
-                </li>
-                <li>
-                    <a class="text-pixl-light/60 hover:text-pixl-light/80" href="#">Highlights</a>
-                </li>
-                <li>
-                    <a class="text-pixl-light/60 hover:text-pixl-light/80" href="#">Inspiration Streams</a>
-                </li>
-            </ul>
-        </nav>
-    </div>
+    <Tabs class="mt-6">
+        <li>
+            <Link :href="profileShow.url(profile)"
+                :class="activeTab !== 'posts' ? 'text-pixl-light/60 hover:text-pixl-light/80' : ''">
+                Posts
+            </Link>
+        </li>
+        <li>
+            <Link :href="profileReplies.url(profile)"
+                :class="activeTab !== 'replies' ? 'text-pixl-light/60 hover:text-pixl-light/80' : ''">
+                Replies
+            </Link>
+        </li>
+        <li>
+            <a class="text-pixl-light/60 hover:text-pixl-light/80" href="#">Highlights</a>
+        </li>
+        <li>
+            <a class="text-pixl-light/60 hover:text-pixl-light/80" href="#">Inspiration Streams</a>
+        </li>
+    </Tabs>
 </template>

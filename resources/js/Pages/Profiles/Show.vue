@@ -1,9 +1,8 @@
 <script setup>
-import { Link } from '@inertiajs/vue3'
 import Layout from '@/Components/Layout.vue'
 import ProfileHeader from '@/Components/ProfileHeader.vue'
-import Post from '@/Components/Post.vue'
-import BackArrowIcon from '@/Components/Icons/BackArrowIcon.vue'
+import PostList from '@/Components/PostList.vue'
+import BackLink from '@/Components/BackLink.vue'
 import { index } from '@/actions/App/Http/Controllers/PostController'
 import Footer from '../../Components/Footer.vue'
 
@@ -22,17 +21,12 @@ defineProps({
 <template>
     <Layout title="PIXL - Profile">
         <main class="-mx-4 flex grow flex-col min-h-0 gap-4 overflow-y-auto px-4 py-4">
-            <Link :href="index.url()" class="group flex items-baseline gap-1.5">
-                <BackArrowIcon />
-                <span>back</span>
-            </Link>
+            <BackLink :href="index.url()" />
 
             <ProfileHeader :profile="profile" active-tab="posts" />
 
             <!-- Feed -->
-            <ol class="border-pixl-light/10 border-t pt-4">
-                <Post v-for="post in posts" :key="post.id" :post="post" />
-            </ol>
+            <PostList :posts="posts" class="border-pixl-light/10 border-t pt-4" />
 
             <Footer />
         </main>
