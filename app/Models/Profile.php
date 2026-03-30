@@ -68,4 +68,14 @@ class Profile extends Model
     {
         return $this->following()->where('following_profile_id', $profile->id)->exists();
     }
+
+    public function follow(Profile $profile): void
+    {
+        Follow::createFollow($this, $profile);
+    }
+
+    public function unfollow(Profile $profile): void
+    {
+        Follow::removeFollow($this, $profile);
+    }
 }

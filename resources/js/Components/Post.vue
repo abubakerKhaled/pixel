@@ -64,7 +64,7 @@ const timeAgo = computed(() => {
 </script>
 
 <template>
-    <li class="flex flex-col not-first:pt-2.5">
+    <li data-test="post-feed-item" class="flex flex-col not-first:pt-2.5">
         <!-- Pure repost indicator -->
         <div v-if="isPureRepost && post.profile" class="flex items-center gap-2 mb-2 ml-14 text-pixl-light/50 text-xs">
             <RepostIcon class="h-3!" />
@@ -93,7 +93,7 @@ const timeAgo = computed(() => {
                                     {{ displayPost.profile.display_name }}
                                 </Link>
                             </p>
-                            <Link :href="postShow.url({ profile: displayPost.profile, post: displayPost })"
+                            <Link data-test="visit-post-link" :href="postShow.url({ profile: displayPost.profile, post: displayPost })"
                                 class="text-pixl-light/40 hover:text-pixl-light/60 text-xs">
                                 {{ timeAgo }}
                             </Link>

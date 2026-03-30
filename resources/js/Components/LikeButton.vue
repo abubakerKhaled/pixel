@@ -34,10 +34,10 @@ const toggle = () => {
 
 <template>
     <div class="flex items-center gap-1">
-        <button type="button" aria-label="Like" class="hover:text-pixl" :class="{ 'text-pixl': liked }"
+        <button data-test="like-button" type="button" aria-label="Like" class="hover:text-pixl" :class="{ 'text-pixl': liked }"
             @click="toggle">
             <HeartIcon />
         </button>
-        <span class="hover:text-pixl text-sm" :class="{ 'text-pixl': liked }">{{ likeCount }}</span>
+        <span data-test="like-post-count" class="hover:text-pixl text-sm" :class="{ 'text-pixl': liked }">{{ likeCount }}</span>
     </div>
 </template>
