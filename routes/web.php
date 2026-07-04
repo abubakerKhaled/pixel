@@ -72,3 +72,6 @@ Route::get('/{profile:handle}/replies', [ProfileController::class, 'replies'])->
 Route::scopeBindings()->group(function () {
     Route::get('/{profile:handle}/post/{post}', [PostController::class, 'show'])->name('posts.show');
 });
+
+Route::get('/register', [AuthController::class, 'create'])->name('register');
+Route::post('/register', [AuthController::class, 'store'])->name('register');
