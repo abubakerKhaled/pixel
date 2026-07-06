@@ -19,10 +19,10 @@ const authProfile = usePage().props.auth?.user?.profile
         <h2 class="text-pixl-light/60 text-sm">Artists to follow</h2>
         <ol class="mt-4 flex flex-col gap-4">
             <li v-for="profile in profiles" :key="profile.id" class="flex items-center justify-between gap-4">
-                <Link :href="profileShow.url(profile)">
-                    <div class="flex items-center gap-2.5">
+                <Link :href="profileShow.url(profile)" class="min-w-0 flex-1">
+                    <div class="flex items-center gap-2.5 min-w-0">
                         <img :src="profile.avatar_url" :alt="'Avatar of ' + profile.display_name"
-                            class="size-8 object-cover" />
+                            class="size-8 object-cover shrink-0" />
                         <p class="truncate text-sm">{{ profile.handle }}</p>
                     </div>
                 </Link>
