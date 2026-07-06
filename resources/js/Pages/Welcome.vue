@@ -1,6 +1,7 @@
 <script setup>
 import { Head, Link } from '@inertiajs/vue3'
 import { index } from '@/actions/App/Http/Controllers/PostController'
+import { create as register } from '@/actions/App/Http/Controllers/Auth/AuthController'
 import PixlLogoIcon from '@/Components/Icons/PixlLogoIcon.vue'
 </script>
 
@@ -54,7 +55,7 @@ import PixlLogoIcon from '@/Components/Icons/PixlLogoIcon.vue'
                             :href="index.url()" role="button">Sign in with Apple</Link>
                         <p>or</p>
                         <Link class="border border-transparent bg-pixl px-4 py-1.5 text-pixl-dark transition-all duration-200 hover:bg-pixl/90 active:bg-pixl/95"
-                            :href="index.url()" role="button">Create an Account</Link>
+                            :href="register.url()" role="button">Create an Account</Link>
                         <p class="mt-12 text-left text-sm sm:mt-16 md:mt-20">
                             Already have an account?
                         </p>

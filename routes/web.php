@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Models\User;
@@ -67,11 +68,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/{profile:handle}/unfollow', [ProfileController::class, 'unfollow'])->name('profiles.unfollow');
 });
 
+Route::get('/register', [AuthController::class, 'create'])->name('register');
+Route::post('/register', [AuthController::class, 'store'])->name('register');
+
 Route::get('/{profile:handle}', [ProfileController::class, 'show'])->name('profiles.show');
 Route::get('/{profile:handle}/replies', [ProfileController::class, 'replies'])->name('profiles.replies');
 Route::scopeBindings()->group(function () {
     Route::get('/{profile:handle}/post/{post}', [PostController::class, 'show'])->name('posts.show');
 });
-
-Route::get('/register', [AuthController::class, 'create'])->name('register');
-Route::post('/register', [AuthController::class, 'store'])->name('register');
