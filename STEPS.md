@@ -18,7 +18,11 @@ Implement the UI and forms for registration, login, and profile editing. Then up
 
 
 ### Implentation details
-**logout** 
-    - the logout function is destroy
-    - Auth::logout()
-    - return redirect()->route('welcome')
+**login** 
+    - We have the form with the Email and password fields
+    - the user enters the email and password and we check if the user exists in the database
+    - if the user exist we check the password
+    - if the password correct log the user in
+    - if the password is not match show error message in the login page
+    - if the user is not exist show error message in the login page
+

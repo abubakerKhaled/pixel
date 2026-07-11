@@ -1,30 +1,27 @@
 <script setup>
-import { Head, useForm } from '@inertiajs/vue3'
-import { store } from '@/actions/App/Http/Controllers/Auth/AuthController'
+import { Head, useForm, Link } from '@inertiajs/vue3'
+import { store } from '@/actions/App/Http/Controllers/Auth/SessionsController'
 import BackLink from '@/Components/BackLink.vue'
 import PixlLogoIcon from '@/Components/Icons/PixlLogoIcon.vue'
 
 // Inertia form state & helper
 const form = useForm({
-    name: '',
-    handle: '',
     email: '',
     password: '',
-    password_confirmation: '',
 })
 
 // Submit form using Wayfinder action
 const submit = () => {
     form.post(store.url(), {
-        onFinish: () => form.reset('password', 'password_confirmation'),
+        onFinish: () => form.reset('password'),
     })
 }
 </script>
 
 <template>
-    <Head title="PIXL | Register" />
+    <Head title="PIXL | Login" />
 
-    <div class="relative flex min-h-dvh w-full flex-col bg-pixl-dark text-pixl-light md:block md:overflow-clip font-pixl">
+    <div class="relative flex min-h-dvh w-full flex-col items-center justify-center bg-pixl-dark text-pixl-light p-4 font-pixl md:overflow-clip">
         <!-- Background image -->
         <div class="fixed inset-0 pointer-events-none overflow-clip">
             <img src="/images/Official-Login-BG.png" alt="" role="presentation"
@@ -32,7 +29,7 @@ const submit = () => {
             <div class="absolute inset-0 bg-[url(/images/white-noise.gif)] opacity-[0.01]"></div>
         </div>
 
-        <main class="isolate mx-auto grid max-w-[1000px] grow place-items-center max-md:py-8 max-md:px-4 md:h-full xl:max-w-6xl">
+        <main class="isolate mx-auto w-full max-w-[1000px] xl:max-w-6xl">
             <div class="flex w-full flex-col items-center justify-between gap-8 md:flex-row md:gap-16">
                 <!-- Left: Logo + Word Stack -->
                 <div class="max-md:mt-4">
@@ -60,7 +57,7 @@ const submit = () => {
                     </div>
                 </div>
 
-                <!-- Right: Register Form Container -->
+                <!-- Right: Login Form Container -->
                 <div class="z-10 w-full max-w-md border border-pixl/30 bg-pixl-dark/80 p-6 backdrop-blur-sm sm:p-8 max-md:mb-16">
                     <!-- Header with Back link and Logo for small devices -->
                     <div class="flex items-center justify-between mb-6">
@@ -69,47 +66,10 @@ const submit = () => {
                     </div>
 
                     <h1 class="text-2xl text-pixl uppercase tracking-wider mb-6 text-center sm:text-left">
-                        Create Account
+                        Sign In
                     </h1>
 
                     <form @submit.prevent="submit" class="flex flex-col gap-4">
-                        <!-- Name -->
-                        <div class="flex flex-col gap-1">
-                            <label for="name" class="text-xs text-pixl uppercase font-semibold">Name</label>
-                            <input
-                                id="name"
-                                v-model="form.name"
-                                type="text"
-                                autocomplete="name"
-                                required
-                                placeholder="e.g. Satoshi Nakamoto"
-                                class="w-full bg-pixl-dark/60 border border-pixl-light/20 px-3 py-1.5 text-pixl-light placeholder-pixl-light/30 focus:border-pixl focus:outline-none transition-colors duration-200"
-                            />
-                            <span v-if="form.errors.name" class="text-red-400 text-xs mt-1">
-                                {{ form.errors.name }}
-                            </span>
-                        </div>
-
-                        <!-- Handle -->
-                        <div class="flex flex-col gap-1">
-                            <label for="handle" class="text-xs text-pixl uppercase font-semibold">Handle</label>
-                            <div class="relative flex items-center">
-                                <span class="absolute left-3 text-pixl-light/40">@</span>
-                                <input
-                                    id="handle"
-                                    v-model="form.handle"
-                                    type="text"
-                                    autocomplete="username"
-                                    required
-                                    placeholder=""
-                                    class="w-full bg-pixl-dark/60 border border-pixl-light/20 pl-8 pr-3 py-1.5 text-pixl-light placeholder-pixl-light/30 focus:border-pixl focus:outline-none transition-colors duration-200"
-                                />
-                            </div>
-                            <span v-if="form.errors.handle" class="text-red-400 text-xs mt-1">
-                                {{ form.errors.handle }}
-                            </span>
-                        </div>
-
                         <!-- Email -->
                         <div class="flex flex-col gap-1">
                             <label for="email" class="text-xs text-pixl uppercase font-semibold">Email Address</label>
@@ -117,7 +77,7 @@ const submit = () => {
                                 id="email"
                                 v-model="form.email"
                                 type="email"
-                                autocomplete="email"
+                                autocomplete="username"
                                 required
                                 placeholder="satoshi@bitcoin.org"
                                 class="w-full bg-pixl-dark/60 border border-pixl-light/20 px-3 py-1.5 text-pixl-light placeholder-pixl-light/30 focus:border-pixl focus:outline-none transition-colors duration-200"
@@ -134,7 +94,7 @@ const submit = () => {
                                 id="password"
                                 v-model="form.password"
                                 type="password"
-                                autocomplete="new-password"
+                                autocomplete="current-password"
                                 required
                                 placeholder="••••••••"
                                 class="w-full bg-pixl-dark/60 border border-pixl-light/20 px-3 py-1.5 text-pixl-light placeholder-pixl-light/30 focus:border-pixl focus:outline-none transition-colors duration-200"
@@ -144,36 +104,19 @@ const submit = () => {
                             </span>
                         </div>
 
-                        <!-- Confirm Password -->
-                        <div class="flex flex-col gap-1">
-                            <label for="password_confirmation" class="text-xs text-pixl uppercase font-semibold">Confirm Password</label>
-                            <input
-                                id="password_confirmation"
-                                v-model="form.password_confirmation"
-                                type="password"
-                                autocomplete="new-password"
-                                required
-                                placeholder="••••••••"
-                                class="w-full bg-pixl-dark/60 border border-pixl-light/20 px-3 py-1.5 text-pixl-light placeholder-pixl-light/30 focus:border-pixl focus:outline-none transition-colors duration-200"
-                            />
-                            <span v-if="form.errors.password_confirmation" class="text-red-400 text-xs mt-1">
-                                {{ form.errors.password_confirmation }}
-                            </span>
-                        </div>
-
                         <!-- Submit Button -->
                         <button
                             type="submit"
                             :disabled="form.processing"
                             class="mt-2 border border-transparent bg-pixl px-4 py-2 text-pixl-dark font-semibold uppercase tracking-wider transition-colors duration-200 hover:bg-pixl/90 active:bg-pixl/95 disabled:opacity-50 cursor-pointer text-center font-bold"
                         >
-                            {{ form.processing ? 'Registering...' : 'Register' }}
+                            {{ form.processing ? 'Signing In...' : 'Sign In' }}
                         </button>
                     </form>
 
                     <div class="mt-6 text-center text-sm">
-                        <span class="text-pixl-light/60">Already have an account? </span>
-                        <Link href="/login" class="text-pixl hover:underline transition-all duration-200">Sign in</Link>
+                        <span class="text-pixl-light/60">Don't have an account? </span>
+                        <Link href="/register" class="text-pixl hover:underline transition-all duration-200">Register</Link>
                     </div>
                 </div>
             </div>

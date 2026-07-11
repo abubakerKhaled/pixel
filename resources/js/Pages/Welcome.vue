@@ -60,7 +60,7 @@ import PixlLogoIcon from '@/Components/Icons/PixlLogoIcon.vue'
                             Already have an account?
                         </p>
                         <Link class="border border-transparent bg-pixl px-4 py-1.5 text-pixl-dark transition-all duration-200 hover:bg-pixl/90 active:bg-pixl/95"
-                            :href="index.url()" role="button">Sign in</Link>
+                            href="/login" role="button">Sign in</Link>
                     </div>
                 </div>
             </div>

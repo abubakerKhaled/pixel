@@ -39,7 +39,7 @@ onUnmounted(() => {
     <header class="my-4 hidden w-48 shrink-0 flex-col justify-between gap-8 pl-4 sm:flex xl:ml-32">
         <div class="overflow-y-auto">
             <!-- Logo -->
-            <Link href="/">
+            <Link :href="index.url()">
                 <PixlLogoIcon class="h-8" />
             </Link>
 

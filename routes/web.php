@@ -20,7 +20,7 @@ Route::get('/dev/login', function () {
     request()->session()->regenerate();
 
     return redirect()->intended(route('profiles.show', $user->profile));
-})->name('login');
+})->name('dev.login');
 
 Route::get('/dev/logout', function () {
     Auth::logout();
@@ -71,6 +71,9 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/register', [AuthController::class, 'create'])->name('register');
 Route::post('/register', [AuthController::class, 'store'])->name('register');
+
+Route::get('/login', [SessionsController::class, 'create'])->name('login');
+Route::post('/login', [SessionsController::class, 'store'])->name('login');
 
 Route::delete('/logout', [SessionsController::class, 'destroy'])->name('logout');
 
