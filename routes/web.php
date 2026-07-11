@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Auth\SessionsController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Models\User;
@@ -27,7 +28,7 @@ Route::get('/dev/logout', function () {
     request()->session()->regenerateToken();
 
     return redirect()->intended('/feed');
-})->name('logout');
+})->name('dev.logout');
 
 Route::middleware('auth')->group(function () {
     Route::get('/home', [PostController::class, 'index'])->name('posts.index');
@@ -70,6 +71,8 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/register', [AuthController::class, 'create'])->name('register');
 Route::post('/register', [AuthController::class, 'store'])->name('register');
+
+Route::delete('/logout', [SessionsController::class, 'destroy'])->name('logout');
 
 Route::get('/{profile:handle}', [ProfileController::class, 'show'])->name('profiles.show');
 Route::get('/{profile:handle}/replies', [ProfileController::class, 'replies'])->name('profiles.replies');
