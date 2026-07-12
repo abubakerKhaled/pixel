@@ -5,24 +5,40 @@ Implement the UI and forms for registration, login, and profile editing. Then up
 
 ## Feature
 
-- **Login Feature**
-    - Create the login form
-    - create the login controller
+- **Profile editing**
+    - What are the fields we want to edit in the form?
+        - Name
+        - Handle 
+        - Bio
+
+- **Steps**
+    1. User must be authenticated.
+    2. User must enter a uniqe handle.
+    3. User must enter the password, to check if he is the real user.
 
 
-### Steps
+- **Implementation**
+    - Create a form to edit the profile
+    - form filds are:
+        - Name
+        - Handle 
+        - Bio
+        - password confirmation (to check if he is the real user)
 
-- create SessionsController
-- create a logout feature
-- create a login feature
+    - the user sumbit the form 
+    - we check the password to be the correct one
+    - if yes change the fields
+    - if no redirect to the profile page with error message
 
 
-### Implentation details
-**login** 
-    - We have the form with the Email and password fields
-    - the user enters the email and password and we check if the user exists in the database
-    - if the user exist we check the password
-    - if the password correct log the user in
-    - if the password is not match show error message in the login page
-    - if the user is not exist show error message in the login page
 
+### Controller details
+- name is `Profile\ProfileController`
+- methods:
+    - `edit` - show the profile edit form
+    - `update` - update the profile
+
+
+### Routes details
+- `GET /profile` - show the profile edit form
+- `PUT /profile` - update the profile
