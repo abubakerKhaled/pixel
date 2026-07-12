@@ -98,9 +98,9 @@ onUnmounted(() => {
                 <!-- Absolutely positioned popup menu -->
                 <div v-if="showMenu"
                     class="absolute bottom-full left-0 mb-3 w-48 border border-pixl/30 bg-pixl-dark/95 p-1 backdrop-blur-sm shadow-xl z-50">
-                    <a href="#" class="block w-full text-left px-3 py-2 text-sm text-pixl-light hover:bg-pixl-light/10 font-pixl">
+                    <Link href="/profile/edit" class="block w-full text-left px-3 py-2 text-sm text-pixl-light hover:bg-pixl-light/10 font-pixl">
                         Edit Profile
-                    </a>
+                    </Link>
                     <Link href="/logout" method="delete" as="button"
                         class="block w-full text-left px-3 py-2 text-sm text-red-400 hover:bg-red-500/10 font-pixl font-semibold">
                         Log out @{{ profile.handle }}

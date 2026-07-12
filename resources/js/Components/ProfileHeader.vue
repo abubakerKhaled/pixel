@@ -40,10 +40,10 @@ const isOwnProfile = computed(() => authUser && authUser.id === props.profile.us
 
             <!-- Edit/Follow button — replaces @auth + @if(Auth::id() === ...) -->
             <template v-if="authUser">
-                <a v-if="isOwnProfile" href="#"
+                <Link v-if="isOwnProfile" href="/profile/edit"
                     class="bg-pixl-dark/50 hover:bg-pixl-dark/60 active:bg-pixl-dark/75 border-pixl/50 hover:border-pixl/60 active:border-pixl/75 text-pixl border px-2 py-1 text-sm">
                     Edit Profile
-                </a>
+                </Link>
                 <FollowButton v-else :profile="profile" :initial-following="profile.is_following" />
             </template>
         </div>
