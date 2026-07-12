@@ -67,6 +67,9 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/{profile:handle}/follow', [ProfileController::class, 'follow'])->name('profiles.follow');
     Route::post('/{profile:handle}/unfollow', [ProfileController::class, 'unfollow'])->name('profiles.unfollow');
+
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profiles.edit');
+    Route::put('/profile/update', [ProfileController::class, 'update'])->name('profiles.update');
 });
 
 Route::get('/register', [AuthController::class, 'create'])->name('register');
